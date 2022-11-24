@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:33:12 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/11/21 13:33:18 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:11:51 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,3 +18,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+typedef struct box
+{
+	int n;
+	struct box *next;
+}box;

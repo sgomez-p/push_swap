@@ -6,7 +6,7 @@
 #    By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 14:27:09 by sgomez-p          #+#    #+#              #
-#    Updated: 2022/11/21 13:36:30 by sgomez-p         ###   ########.fr        #
+#    Updated: 2022/11/23 09:49:36 by sgomez-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			= push_swap
 
 LIBFT			= libft.a
 
-LIBFT_DIR		= ./Libft/
+LIBFT_DIR		= libft/
 
 SRCS			= push_swap.c \
 				
