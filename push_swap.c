@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/11/25 12:38:38 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:44:58 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	create_stack(situation *situ, int argc, char **argv)
 {
 	int		i;
 	stack		*current;
+
 	situ->movements = NULL;
 	situ->stack_b = NULL;
 	current = (stack*)malloc(sizeof(stack));
@@ -40,9 +41,9 @@ void	create_stack(situation *situ, int argc, char **argv)
 	}
 }
 
-int	write_stack_a(stack *stack)
+int	write_stack_a(struct stack *stack)
 {
-	stack	*current;
+	struct	stack	*current;
 
 	current = stack;
 	while(current != NULL)
@@ -54,9 +55,9 @@ int	write_stack_a(stack *stack)
 	ft_putstr("\n");
 }
 
-int	write_stack_b(stack *stack)
+int	write_stack_b(struct stack *stack)
 {
-	stack *current;
+	struct stack *current;
 
 	current = stack;
 	while(current != NULL)
@@ -67,7 +68,7 @@ int	write_stack_b(stack *stack)
 			current = current->next;
 	}
 }
-
+/*
 void error_no_nbr(int argc, char **argv)
 {	
 	int	i;
@@ -78,13 +79,13 @@ void error_no_nbr(int argc, char **argv)
 		while (argv[i])
 		{
 			if (check_is_nbr(argv[i]) == 0)
-				quit();
+				exit(0);
 			i++;
 		}
 	}
-}
+} 
 
-/*hay q revisar esta funcion*/
+
 int	check_is_nbr(char **argc)
 {
 	int i;
@@ -94,4 +95,12 @@ int	check_is_nbr(char **argc)
 		return (0);
 	i++;
 	return (1);
+} */
+
+int main(int argc, char **argv)
+{
+	struct situation current;
+	create_stack(&current, argc, argv);
+	write_stack_a(&current.stack_a);
+	write_stack_b(&current.stack_b);
 }
