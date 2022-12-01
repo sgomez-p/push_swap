@@ -13,16 +13,16 @@
 #include "push_swap.h"
 
 /* lo primero q haremos es pasarle los numeros y las columnas para verlo gráficamente.
-Me tiene que crear un stack con ellos. Los n los recibimos como un str*/
+Me tiene que crear un stack con ellos. Los n los recibimos como un str por eso hay que hacer un atoi*/
 void	create_stack(situation *situ, int argc, char **argv)
 {
-	int		i;
-	stack		*current;
+	int				i;
+	struct stack	*current;
 
 	situ->movements = NULL;
 	situ->stack_b = NULL;
 	current = (stack*)malloc(sizeof(stack));
-	error_manage((int)(current))
+	error_manage((in                                                                                                                                                                  			t)(current))
 	situ->stack_a = current;
 	i = 0;
 	error_manage(!(i >= argc -1)); /*gestion de si se ha hecho bien el malloc*/
@@ -41,11 +41,11 @@ void	create_stack(situation *situ, int argc, char **argv)
 	}
 }
 
-int	write_stack_a(struct stack *stack)
+int	write_stack_a(struct stack *stack_a)
 {
 	struct	stack	*current;
 
-	current = stack;
+	current = stack_a;
 	while(current != NULL)
 	{
 		ft_putnbr(current->n);
@@ -55,11 +55,11 @@ int	write_stack_a(struct stack *stack)
 	ft_putstr("\n");
 }
 
-int	write_stack_b(struct stack *stack)
+int	write_stack_b(struct stack *stack_b)
 {
 	struct stack *current;
 
-	current = stack;
+	current = stack_b;
 	while(current != NULL)
 	{
 		ft_putstr("         ");

@@ -15,8 +15,8 @@
 
 void	check_duplicate(struct stack **current)
 {
-	int aux;
-	stack	new_node;
+	int 			aux;
+	struct stack	new_node;
 
 	aux = new_node->next;
 	while(new_node->next != '\0')
@@ -31,7 +31,7 @@ void	check_duplicate(struct stack **current)
 void	ra_mov(struct stack **stack_a)
 {
 	struct 	stack	*current;
-	int num;
+	int 			num;
 	current = (struct stack*)malloc(sizeof(struct stack));
 	
 	current = *stack_a;
@@ -43,6 +43,7 @@ void	ra_mov(struct stack **stack_a)
 		current = current->next;
 	}
 	current->n = num;
+	free(num);
 }
 
 void	rb_mov(struct stack **stack_b)
@@ -52,7 +53,7 @@ void	rb_mov(struct stack **stack_b)
 	int num;
 	current = (struct stack*)malloc(sizeof(struct stack));
 	
-	current = *stack_a;
+	current = *stack_b;
 	num = current->n;
 	current = current->next;
 	while(current->next != NULL)
@@ -61,90 +62,134 @@ void	rb_mov(struct stack **stack_b)
 		current = current->next;
 	}
 	current->n = num;
+	free(num);
 }
 
 void	rr_mov(struct stack **stack_a, struct stack **stack_b)
 {
-	ra_mov(t_list **stack_a);
-	rb_mov(t_list **stack_b);
+	ra_mov(struct stack **stack_a);
+	rb_mov(struct stack **stack_b);
 }
 
 void	rra_mov(struct stack **stack_a)
 {
-	stack	*current;
-	struct stack *Last;
-	
-	*Last = NULL;
+	struct stack	*current;
+	struct stack *Last_node;
+
+	*Last_node = NULL;
 	current = (stack*)malloc(sizeof(stack));
 	current->next = *stack_a;
 	while(new_node->next != NULL)
 	{
-		Last = new_node; /* probar a borrar esta opción yo creo que no hace falta pillar los alores en esta variable*/
+		Last_node = new_node; /* probar a borrar esta opción yo creo que no hace falta pillar los alores en esta variable*/
 		new_node = new_node->next;
 	}
-	Last->next = NULL;
+	Last_node->next = NULL;
 	current->next = *stack_a;
 	*current = new_node; /* estamos updateando los valores de  nuestro stack*/
 }
 
 void	rrb_mov(struct stack **stack)
 {	
-	stack	*current;
-	struct stack *Last;
+	struct stack	*current;
+	struct stack *Last_node;
 	
-	*Last = NULL;
+	*Last_node = NULL;
 	current = (stack*)malloc(sizeof(stack));
 	current->next = *stack_a;
 	while(new_node->next != NULL)
 	{
-		Last = new_node; /* probar a borrar esta opción yo creo que no hace falta pillar los alores en esta variable*/
+		Last_node = new_node; /* probar a borrar esta opción yo creo que no hace falta pillar los alores en esta variable*/
 		new_node = new_node->next;
 	}
-	Last->next = NULL;
+	Last_node->next = NULL;
 	current->next = *stack_a;
 	*current = new_node; /* estamos updateando los valores de  nuestro stack*/
 }
 
-void	sa_mov(struct stack **stack)
+void	rrr_mov(struct stack **stack_a, struct stack **stack_b)
 {
-	stack	*new_node;
-	int		i;
-	int		aux;
+	ra_mov(struct stack **stack_a);
+	rb_mov(struct stack **stack_b);
+}
+
+void	pa_mov(struct stack **stack_a, struct stack **stack_b)
+{
+	struct stack	*current;
+	int				aux;
+
+	aux = new_node->n;
+	if(check_empty(stack_b) == 0)
+		stack_a = aux;
+		new_node->n = new_node->next;
+	free (aux);
+}
+
+void	pb_mov(struct stack **stack_a, struct stack **stack_b)
+{
+	struct stack	*current;
+	int				aux;
+
+	aux = new_node->n;
+	if(check_empty(stack_a) == 0)
+		stack_b = aux;
+		new_node->n = new_node->next;
+	free (aux);
+}
+
+void	sa_mov(struct stack **stack_a)
+{
+	struct stack	*new_node;
+	int				i;
+	int				aux;
 	
 	aux = 0;
 	while (new_node->next != NULL)
-	
+		i++;
 	if(i >= 1)
 	{
 		aux = new_node->next;
-		new_node->next = new_node->next->next;
-		new_node->next->next = aux;
+		new_node->n = new_node->next;
+		new_node->next = aux;
 	}
-	free (aux); /*no se si hay q hacerlo pq no hago alloc previamente*/
-	return (0);
+	free (aux);
+	/*hace falta return(0) ? */
 }
 
-void	sb_mov(struct stack **stack)
+void	sb_mov(struct stack **stack_b)
 {
-	struct	stack	stack_b;
-	stack	*current;
-	stack	new_node;
-	int		i;
-	int		aux;
+	struct stack	*new_node;
+	int				i;
+	int				aux;
 	
 	aux = 0;
-	if(i <= 1)
+	while (new_node->next != NULL)
+		i++;
+	if(i >= 1)
 	{
 		aux = new_node->next;
-		new_node->next = new_node->next->next;
-		new_node->next->next = aux;
+		new_node->n = new_node->next;
+		new_node->next = aux;
 	}
-	free (aux); /*no se si hay q hacerlo pq no hago alloc previamente*/
+	free (aux);
 	return (0);
 }
 
 void	ss_mov(struct stack **stack)
 {
-	sa_mov(stack_a);
-	sb_mov(stack_b);
+	sa_mov(struct stack stack_a);
+	sb_mov(struct stack stack_b);
+}
+
+int	check_empty(struct stack stack)
+{
+	int i;
+
+	i = 0;
+	while (new_node->next != NULL)
+		i++;
+	if (i > 1)
+		return(0);
+	else
+		return(1);
 }
