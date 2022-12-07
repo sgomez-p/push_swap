@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME			= push_swap
-SRCS			= ft_putchar.c ft_putnbr.c ft_putstr.c ft_atoi.c movements.c push_swap.c
+SRCS			= ft_putchar.c ft_putnbr.c ft_putstr.c ft_atoi.c push_swap.c
 OBJS			= $(SRCS:.c=.o)
 CC				= gcc
 CFLAGS			= -Wall -Wextra -Werror

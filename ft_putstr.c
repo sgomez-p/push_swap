@@ -10,18 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-void	ft_putstr(char *s)
+void	ft_putstr(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (!s)
-		return ;
-	while (s[i] != '\0')
+	while (str[i])
 	{
-		write(1, &s[i], 1);
+		write(1, &str[i], 1);
 		i++;
 	}
 }

@@ -10,21 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-void	ft_putnbr(int n)
+void	ft_putnbr(int nb)
 {
-	long	number;
+	unsigned int	nbr;
 
-	number = n;
-	if (number < 0)
+	if (nb < 0)
 	{
 		ft_putchar('-');
-		number = (number * -1);
+		nbr = nb * -1;
 	}
-	if (number >= 10)
-		ft_putnbr(number / 10);
-	number = number % 10;
-	if (number < 10)
-		ft_putchar(number + 48);
+	else
+		nbr = nb;
+	if (nbr >= 10)
+		ft_putnbr(nbr / 10);
+	ft_putchar(nbr % 10 + 48);
 }

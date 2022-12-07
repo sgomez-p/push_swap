@@ -19,13 +19,13 @@ void	create_stack(situation *situ, int argc, char **argv)
 	int				i;
 	struct stack	*current;
 
-	situ->movements = NULL;
+	//situ->movements = NULL;
 	situ->stack_b = NULL;
 	current = (stack*)malloc(sizeof(stack));
-	error_manage((in                                                                                                                                                                  			t)(current))
+	//error_manage((int)(current));
 	situ->stack_a = current;
 	i = 0;
-	error_manage(!(i >= argc -1)); /*gestion de si se ha hecho bien el malloc*/
+	//error_manage(!(i >= argc -1)); /*gestion de si se ha hecho bien el malloc*/
 	while(++i < argc)
 	{
 		current->n = ft_atoi(argv[i]);
@@ -41,7 +41,7 @@ void	create_stack(situation *situ, int argc, char **argv)
 	}
 }
 
-int	write_stack_a(struct stack *stack_a)
+void	write_stack_a(struct stack *stack_a)
 {
 	struct	stack	*current;
 
@@ -55,7 +55,7 @@ int	write_stack_a(struct stack *stack_a)
 	ft_putstr("\n");
 }
 
-int	write_stack_b(struct stack *stack_b)
+void	write_stack_b(struct stack *stack_b)
 {
 	struct stack *current;
 
@@ -68,34 +68,6 @@ int	write_stack_b(struct stack *stack_b)
 			current = current->next;
 	}
 }
-/*
-void error_no_nbr(int argc, char **argv)
-{	
-	int	i;
-	
-	i = 1;
-	if (argc > 1)
-	{
-		while (argv[i])
-		{
-			if (check_is_nbr(argv[i]) == 0)
-				exit(0);
-			i++;
-		}
-	}
-} 
-
-
-int	check_is_nbr(char **argc)
-{
-	int i;
-	
-	i = 1;
-	if(argc[i] < '0' || argc[i] > '9')
-		return (0);
-	i++;
-	return (1);
-} */
 
 int main(int argc, char **argv)
 {

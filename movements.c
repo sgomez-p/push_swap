@@ -28,7 +28,7 @@ void	check_duplicate(struct stack **current)
 	new_node = new_node->next;
 }
 
-void	ra_mov(struct stack **stack_a)
+void	ra_mov(struct stack **stack_a) // (struct stack **current)
 {
 	struct 	stack	*current;
 	int 			num;
@@ -74,7 +74,8 @@ void	rr_mov(struct stack **stack_a, struct stack **stack_b)
 void	rra_mov(struct stack **stack_a)
 {
 	struct stack	*current;
-	struct stack *Last_node;
+	struct stack 	*Last_node;
+	struct stack	*new_node;
 
 	*Last_node = NULL;
 	current = (stack*)malloc(sizeof(stack));
@@ -89,21 +90,22 @@ void	rra_mov(struct stack **stack_a)
 	*current = new_node; /* estamos updateando los valores de  nuestro stack*/
 }
 
-void	rrb_mov(struct stack **stack)
+void	rrb_mov(struct stack **stack_b)
 {	
 	struct stack	*current;
-	struct stack *Last_node;
+	struct stack 	*Last_node;
+	struct stack	*new_node;
 	
 	*Last_node = NULL;
 	current = (stack*)malloc(sizeof(stack));
-	current->next = *stack_a;
+	current->next = *stack_b;
 	while(new_node->next != NULL)
 	{
 		Last_node = new_node; /* probar a borrar esta opción yo creo que no hace falta pillar los alores en esta variable*/
 		new_node = new_node->next;
 	}
 	Last_node->next = NULL;
-	current->next = *stack_a;
+	current->next = *stack_b;
 	*current = new_node; /* estamos updateando los valores de  nuestro stack*/
 }
 
@@ -115,23 +117,27 @@ void	rrr_mov(struct stack **stack_a, struct stack **stack_b)
 
 void	pa_mov(struct stack **stack_a, struct stack **stack_b)
 {
-	struct stack	*current;
-	int				aux;
+	struct stack	*new_node;
+	struct stack	*new_node_2;
 
-	aux = new_node->n;
-	if(check_empty(stack_b) == 0)
-		stack_a = aux;
-		new_node->n = new_node->next;
-	free (aux);
+	new_node = (stack*)malloc(sizeof(stack));
+	new_node_2 = (stack*)malloc(sizeof(stack));
+	new_node_2 = *stack_b;
+	new_node->next = *stack_a; //copia a partir del segundo
+	new_node->n = new_node_2->n;
+	new_node_2 = new_node_2->next;
+	*stack_a = new_node;
+	*stack_b = new_node_2;
+	//mira si está vacio ya en algoritmo
 }
 
 void	pb_mov(struct stack **stack_a, struct stack **stack_b)
 {
-	struct stack	*current;
+	struct stack	*new_node;
 	int				aux;
 
 	aux = new_node->n;
-	if(check_empty(stack_a) == 0)
+	if(check_empty(*stack_a) == 0)
 		stack_b = aux;
 		new_node->n = new_node->next;
 	free (aux);
