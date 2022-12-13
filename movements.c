@@ -16,7 +16,7 @@
 void	check_duplicate(struct stack **current)
 {
 	int 			aux;
-	struct stack	new_node;
+	struct stack	*new_node;
 
 	aux = new_node->next;
 	while(new_node->next != '\0')
@@ -28,7 +28,7 @@ void	check_duplicate(struct stack **current)
 	new_node = new_node->next;
 }
 
-void	ra_mov(struct stack **stack_a) // (struct stack **current)
+void	ra_mov(stacks **stack_a) // (struct stack **current)
 {
 	struct 	stack	*current;
 	int 			num;
@@ -46,7 +46,7 @@ void	ra_mov(struct stack **stack_a) // (struct stack **current)
 	free(num);
 }
 
-void	rb_mov(struct stack **stack_b)
+void	rb_mov(stacks **stack_b)
 {
 	
 	struct 	stack	*current;
@@ -65,19 +65,19 @@ void	rb_mov(struct stack **stack_b)
 	free(num);
 }
 
-void	rr_mov(struct stack **stack_a, struct stack **stack_b)
+void	rr_mov(stacks *s)
 {
-	ra_mov(struct stack **stack_a);
-	rb_mov(struct stack **stack_b);
+	ra_mov(&s->stack_a);
+	rb_mov(&s->stack_b);
 }
 
-void	rra_mov(struct stack **stack_a)
+void	rra_mov(stacks **stack_a)
 {
 	struct stack	*current;
 	struct stack 	*Last_node;
 	struct stack	*new_node;
 
-	*Last_node = NULL;
+	Last_node = NULL;
 	current = (stack*)malloc(sizeof(stack));
 	current->next = *stack_a;
 	while(new_node->next != NULL)
@@ -90,7 +90,7 @@ void	rra_mov(struct stack **stack_a)
 	*current = new_node; /* estamos updateando los valores de  nuestro stack*/
 }
 
-void	rrb_mov(struct stack **stack_b)
+void	rrb_mov(stacks **stack_b)
 {	
 	struct stack	*current;
 	struct stack 	*Last_node;
@@ -106,16 +106,16 @@ void	rrb_mov(struct stack **stack_b)
 	}
 	Last_node->next = NULL;
 	current->next = *stack_b;
-	*current = new_node; /* estamos updateando los valores de  nuestro stack*/
+	*current = *new_node; /* estamos updateando los valores de  nuestro stack*/
 }
 
-void	rrr_mov(struct stack **stack_a, struct stack **stack_b)
+void	rrr_mov(stacks *s)
 {
-	ra_mov(struct stack **stack_a);
-	rb_mov(struct stack **stack_b);
+	rra_mov(&s->stack_a);
+	rrb_mov(&s->stack_b);
 }
 
-void	pa_mov(struct stack **stack_a, struct stack **stack_b)
+void	pa_mov(stacks **stack_a, stacks **stack_b)
 {
 	struct stack	*new_node;
 	struct stack	*new_node_2;
@@ -131,19 +131,19 @@ void	pa_mov(struct stack **stack_a, struct stack **stack_b)
 	//mira si está vacio ya en algoritmo
 }
 
-void	pb_mov(struct stack **stack_a, struct stack **stack_b)
+void	pb_mov(stacks *stack_a, stacks *stack_b)
 {
-	struct stack	*new_node;
 	int				aux;
+	struct stack	*new_node;
 
-	aux = new_node->n;
+	aux = stack_a->n;
 	if(check_empty(*stack_a) == 0)
 		stack_b = aux;
 		new_node->n = new_node->next;
 	free (aux);
 }
 
-void	sa_mov(struct stack **stack_a)
+void	sa_mov(stacks **stack_a)
 {
 	struct stack	*new_node;
 	int				i;
@@ -181,18 +181,18 @@ void	sb_mov(struct stack **stack_b)
 	return (0);
 }
 
-void	ss_mov(struct stack **stack)
+void	ss_mov(struct stacks *s)
 {
-	sa_mov(struct stack stack_a);
-	sb_mov(struct stack stack_b);
+	sa_mov(&s->stack_a);
+	sb_mov(&s->stack_b);
 }
 
-int	check_empty(struct stack stack)
+int	check_empty(stacks *s)
 {
 	int i;
 
 	i = 0;
-	while (new_node->next != NULL)
+	while (s->next != NULL)
 		i++;
 	if (i > 1)
 		return(0);

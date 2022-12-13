@@ -14,7 +14,7 @@
 
 /* lo primero q haremos es pasarle los numeros y las columnas para verlo gráficamente.
 Me tiene que crear un stack con ellos. Los n los recibimos como un str por eso hay que hacer un atoi*/
-void	create_stack(situation *situ, int argc, char **argv)
+void	create_stack(stacks *situ, int argc, char **argv)
 {
 	int				i;
 	struct stack	*current;
@@ -71,7 +71,7 @@ void	write_stack_b(struct stack *stack_b)
 
 int main(int argc, char **argv)
 {
-	struct situation current;
+	struct stacks current;
 	create_stack(&current, argc, argv);
 	write_stack_a(&current.stack_a);
 	write_stack_b(&current.stack_b);

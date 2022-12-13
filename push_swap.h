@@ -22,20 +22,20 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
-typedef struct stack
+typedef struct stack //definimos lo q tiene cada stack individual
 {
 	int 			n;
 	struct stack 	*next;
 }stack;
 
-typedef struct situation
+typedef struct stacks /*con esto accedemos a los stacks */
 {
-	struct stack *stack_a;
-	struct stack *stack_b;
+	stack *stack_a;
+	stack *stack_b;
 	//struct stack movements;
-}situation;
+}stacks;
 
-void	create_stack(situation *situ, int argc, char **argv);
+void	create_stack(stacks *situ, int argc, char **argv);
 void	write_stack_a(struct stack *stack_a);
 void	write_stack_b(struct stack *stack_b);
 //void 	error_no_nbr(int argc, char **argv);
