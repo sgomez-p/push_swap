@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/11/29 14:44:58 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:38:44 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,34 @@ void	create_stack(stacks *situ, int argc, char **argv)
 			/*error*/
 			current = current->next;
 		}
-		situ->final_a = current; /*hacer la funcion para q nos pille el ultimo nodo*/
+		//situ->final_a = current; /*hacer la funcion para q nos pille el ultimo nodo*/
 		free(current);
 	}
 }
 
-void	write_stack_a(struct stack *stack_a)
+void	write_stack_a(struct stack **stack_a)
 {
 	struct	stack	*current;
 
-	current = stack_a;
+	current = *stack_a;
 	while(current != NULL)
 	{
-		ft_putnbr(current->n);
+		ft_putnbr((int)current->n);
 		while(current->next)
 			current = current->next;
 	}
 	ft_putstr("\n");
 }
 
-void	write_stack_b(struct stack *stack_b)
+void	write_stack_b(struct stack **stack_b) // he tenido q cambiar a doble puntero o se caga y ademas quiero tenerlo como staks pero no me funciona el main si lo hago
 {
 	struct stack *current;
 
-	current = stack_b;
+	current = *stack_b;
 	while(current != NULL)
 	{
 		ft_putstr("         ");
-		ft_putnbr(current->next);
+		ft_putnbr(current->n);
 		while(current->next)
 			current = current->next;
 	}
@@ -71,7 +71,7 @@ void	write_stack_b(struct stack *stack_b)
 
 int main(int argc, char **argv)
 {
-	struct stacks current;
+	stacks	current;
 	create_stack(&current, argc, argv);
 	write_stack_a(&current.stack_a);
 	write_stack_b(&current.stack_b);

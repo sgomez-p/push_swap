@@ -6,12 +6,11 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/11/29 14:49:05 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2022/12/14 09:46:54 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 void	check_duplicate(struct stack **current)
 {
