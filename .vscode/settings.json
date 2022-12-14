@@ -1,8 +1,0 @@
-{
-    "editor.guides.indentation": true,
-    "editor.insertSpaces": false,
-    "files.autoSave": "afterDelay",
-    "files.associations": {
-        "random": "c"
-    }
-}
