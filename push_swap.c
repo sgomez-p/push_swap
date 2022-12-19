@@ -6,39 +6,32 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/12/16 12:46:34 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:51:41 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void ft_init_stacks(data *new, stacks *s)
-{
-	s->stack_a = create_stack(new->stack_a, new->count);
-	s->stack_b = NULL;
-}
-
-void	create_stack(stacks *situ, int argc, char **argv)
+void	create_stack(t_stacks *situ, int argc, char **argv)
 {
 	int				i;
-	const int 			buff;
-	struct stack	*current;
-	struct
+	t_stack			*current;
 
-
-	current = (stack*)malloc(sizeof(stack));
+	(current = (t_stack *)malloc(sizeof(t_stack)));
+	if (!current)
+		exit(1);
 	situ->stack_a = current;
 	i = 0;
-	
-	if(!(current->next = (stack*)malloc(sizeof(stack))));
-				exit(1);
-	while(++i < argc)
+	if (!(current->next))
+		exit(1);
+	while (++i < argc)
 	{
 		current->n = ft_atoi(argv[i]);
 		current->next = NULL;
-		if(i + 1 < argc)
+		if (i + 1 < argc)
 		{
-			if(!(current->next = (stack*)malloc(sizeof(stack))));
+			current->next = (t_stack *)malloc(sizeof(t_stack));
+			if (!(current->next))
 				exit(1);
 		}
 		current = current->next;
@@ -48,42 +41,43 @@ void	create_stack(stacks *situ, int argc, char **argv)
 			current = current->next;
 		i++;
 	}
-	return (current); //aqui he visto q cogen first = current y luego pone return de first pero no lo entiendo
+	free (current);
 }
 
-void	write_stack_a(struct stack **stack_a)
+void	write_stack_a(t_stack *stack_a)
 {
-	struct	stack	*current;
+	t_stack	*current;
 
-	current = *stack_a;
-	while(current != NULL)
+	current = stack_a;
+	while (current != NULL)
 	{
 		ft_putnbr((int)current->n);
-		while(current->next)
+		while (current->next)
 			current = current->next;
 	}
 	ft_putstr("\n");
-	//free(current); no se si tiene q hacerse free
+	free(current);
 }
 
-void	write_stack_b(struct stack **stack_b) // he tenido q cambiar a doble puntero o se caga y ademas quiero tenerlo como staks pero no me funciona el main si lo hago
+void	write_stack_b(t_stack *stack_b)
 {
-	struct stack *current;
+	t_stack	*current;
 
-	current = *stack_b;
-	while(current != NULL)
+	current = stack_b;
+	while (current != NULL)
 	{
 		ft_putstr("         ");
 		ft_putnbr(current->n);
-		while(current->next)
+		while (current->next)
 			current = current->next;
 	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	stacks	current;
+	t_stacks	current;
+
 	create_stack(&current, argc, argv);
-	write_stack_a(&current.stack_a);
-	write_stack_b(&current.stack_b);
+	write_stack_a(current.stack_a);
+	write_stack_b(current.stack_b);
 }

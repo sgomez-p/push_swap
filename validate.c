@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:26:14 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/12/16 10:59:32 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2022/12/19 12:20:03 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	ft_check_duplicate(data *new, stacks *stacks) // esto de data tengo que mir
 }
 */
 
-
+/*
 void	ft_search_duplicate(const int *dup, int cont)
 {
 	int i;
@@ -132,3 +132,4 @@ void	ft_search_duplicate(const int *dup, int cont)
 		i++;
 	}
 }
+*/

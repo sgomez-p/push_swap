@@ -6,37 +6,37 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/12/14 09:46:54 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:55:05 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	check_duplicate(struct stack **current)
+void	check_duplicate(t_stack **current)
 {
-	int 			aux;
-	struct stack	*new_node;
+	int				aux;
+	t_stack			*new_node;
 
 	aux = new_node->next;
-	while(new_node->next != '\0')
+	while (new_node->next != '\0')
 	{
-		if(new_node == aux)
+		if (new_node == aux)
 			quit();
 		aux = new_node->next;
 	}
 	new_node = new_node->next;
 }
 
-void	ra_mov(stacks **stack_a) // (struct stack **current)
+void	ra_mov(t_stack **stack_a)
 {
-	struct 	stack	*current;
-	int 			num;
-	current = (struct stack*)malloc(sizeof(struct stack));
-	
+	t_stack			*current;
+	int				num;
+
+	current = (t_stack *)malloc(sizeof(t_stack));
 	current = *stack_a;
 	num = current->n;
 	current = current->next;
-	while(current->next != NULL)
+	while (current->next != NULL)
 	{
 		current->n = current->next->n;
 		current = current->next;
@@ -45,17 +45,16 @@ void	ra_mov(stacks **stack_a) // (struct stack **current)
 	free(num);
 }
 
-void	rb_mov(stacks **stack_b)
+void	rb_mov(t_stack **stack_b)
 {
-	
-	struct 	stack	*current;
-	int num;
-	current = (struct stack*)malloc(sizeof(struct stack));
-	
+	t_stack	*current;
+	int		num;
+
+	current = (t_stack *)malloc(sizeof(t_stack));
 	current = *stack_b;
 	num = current->n;
 	current = current->next;
-	while(current->next != NULL)
+	while (current->next != NULL)
 	{
 		current->n = current->next->n;
 		current = current->next;
@@ -64,113 +63,111 @@ void	rb_mov(stacks **stack_b)
 	free(num);
 }
 
-void	rr_mov(stacks *s)
+void	rr_mov(t_stacks *s)
 {
 	ra_mov(&s->stack_a);
 	rb_mov(&s->stack_b);
 }
 
-void	rra_mov(stacks **stack_a)
+void	rra_mov(t_stack **stack_a)
 {
-	struct stack	*current;
-	struct stack 	*Last_node;
-	struct stack	*new_node;
+	t_stack	*current;
+	t_stack	*last_node;
+	t_stack	*new_node;
 
-	Last_node = NULL;
-	current = (stack*)malloc(sizeof(stack));
+	last_node = NULL;
+	current = (t_stack *)malloc(sizeof(t_stack));
 	current->next = *stack_a;
-	while(new_node->next != NULL)
+	while (new_node->next != NULL)
 	{
-		Last_node = new_node; /* probar a borrar esta opción yo creo que no hace falta pillar los alores en esta variable*/
+		last_node = new_node;
 		new_node = new_node->next;
 	}
-	Last_node->next = NULL;
+	last_node->next = NULL;
 	current->next = *stack_a;
-	*current = new_node; /* estamos updateando los valores de  nuestro stack*/
+	current = new_node;
 }
 
-void	rrb_mov(stacks **stack_b)
+void	rrb_mov(t_stack **stack_b)
 {	
-	struct stack	*current;
-	struct stack 	*Last_node;
-	struct stack	*new_node;
-	
-	*Last_node = NULL;
-	current = (stack*)malloc(sizeof(stack));
+	t_stack	*current;
+	t_stack	*last_node;
+	t_stack	*new_node;
+
+	last_node = NULL;
+	current = (t_stack *)malloc(sizeof(t_stack));
 	current->next = *stack_b;
-	while(new_node->next != NULL)
+	while (new_node->next != NULL)
 	{
-		Last_node = new_node; /* probar a borrar esta opción yo creo que no hace falta pillar los alores en esta variable*/
+		last_node = new_node;
 		new_node = new_node->next;
 	}
-	Last_node->next = NULL;
+	last_node->next = NULL;
 	current->next = *stack_b;
-	*current = *new_node; /* estamos updateando los valores de  nuestro stack*/
+	*current = *new_node;
 }
 
-void	rrr_mov(stacks *s)
+void	rrr_mov(t_stacks *s)
 {
 	rra_mov(&s->stack_a);
 	rrb_mov(&s->stack_b);
 }
 
-void	pa_mov(stacks **stack_a, stacks **stack_b)
+void	pa_mov(t_stack **stack_a, t_stack **stack_b)
 {
-	struct stack	*new_node;
-	struct stack	*new_node_2;
+	t_stack	*new_node;
+	t_stack	*new_node_2;
 
-	new_node = (stack*)malloc(sizeof(stack));
-	new_node_2 = (stack*)malloc(sizeof(stack));
+	new_node = (t_stack *)malloc(sizeof(t_stack));
+	new_node_2 = (t_stack *)malloc(sizeof(t_stack));
 	new_node_2 = *stack_b;
-	new_node->next = *stack_a; //copia a partir del segundo
+	new_node->next = *stack_a;
 	new_node->n = new_node_2->n;
 	new_node_2 = new_node_2->next;
 	*stack_a = new_node;
 	*stack_b = new_node_2;
-	//mira si está vacio ya en algoritmo
 }
 
-void	pb_mov(stacks *stack_a, stacks *stack_b)
+void	pb_mov(t_stack *stack_a, t_stack *stack_b)
 {
 	int				aux;
-	struct stack	*new_node;
+	t_stack			*new_node;
 
 	aux = stack_a->n;
-	if(check_empty(*stack_a) == 0)
+	if (check_empty(stack_a) == 0)
 		stack_b = aux;
 		new_node->n = new_node->next;
 	free (aux);
 }
 
-void	sa_mov(stacks **stack_a)
+void	sa_mov(t_stack **stack_a)
 {
-	struct stack	*new_node;
+	t_stack			*new_node;
 	int				i;
 	int				aux;
-	
+
 	aux = 0;
 	while (new_node->next != NULL)
 		i++;
-	if(i >= 1)
+	if (i >= 1)
 	{
 		aux = new_node->next;
 		new_node->n = new_node->next;
 		new_node->next = aux;
 	}
 	free (aux);
-	/*hace falta return(0) ? */
 }
 
-void	sb_mov(struct stack **stack_b)
+void	sb_mov(t_stack **stack_b)
 {
-	struct stack	*new_node;
+	t_stack	*new_node;
 	int				i;
 	int				aux;
-	
+
 	aux = 0;
 	while (new_node->next != NULL)
 		i++;
-	if(i >= 1)
+	if (i >= 1)
 	{
 		aux = new_node->next;
 		new_node->n = new_node->next;
@@ -180,21 +177,21 @@ void	sb_mov(struct stack **stack_b)
 	return (0);
 }
 
-void	ss_mov(struct stacks *s)
+void	ss_mov(t_stacks *s)
 {
 	sa_mov(&s->stack_a);
 	sb_mov(&s->stack_b);
 }
 
-int	check_empty(stacks *s)
+int	check_empty(t_stack *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s->next != NULL)
 		i++;
 	if (i > 1)
-		return(0);
+		return (0);
 	else
-		return(1);
+		return (1);
 }
