@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/12/21 12:06:00 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:35:46 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,24 @@ void	create_stack(t_stacks *situ, int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		current->n = ft_atoi(argv[i]);
-		if (i + 1 < argc)
-		{
-			current->next = (t_stack *)malloc(sizeof(t_stack));
-			if (!(current->next))
+		if((check_dup(ft_atoi(argv[i]), (situ->stack_a))))
+		{	
+			current->n = ft_atoi(argv[i]);
+			if (i + 1 < argc)
 			{
-				ft_putstr("Error al reservar memoria\n");
-				exit(1);
+				current->next = (t_stack *)malloc(sizeof(t_stack));
+				if (!(current->next))
+				{
+					ft_putstr("Error al reservar memoria\n");
+					exit(1);
+				}
+			current = current->next;
+			current->next = NULL;
 			}
-		current = current->next;
-		current->next = NULL;
+			i++;	
 		}
-		i++;
+		else
+			ft_error();
 	}
 }
 
@@ -84,11 +89,15 @@ int	main(int argc, char **argv)
 		return 0;
 	}
 	create_stack(&current, argc, argv);
-	write_stack_a(current.stack_a);
-	ft_putstr("-------\n");
-	ft_putstr("a");
-	ft_putstr("    ");
-	write_stack_b(current.stack_b);
-	ft_putstr("b");
-
+	if(ft_validation(argc,argv))
+	{
+		write_stack_a(current.stack_a);
+		ft_putstr("-------\n");
+		ft_putstr("a");
+		ft_putstr("    ");
+		write_stack_b(current.stack_b);
+		ft_putstr("b");
+	}
+	//free(current);
+	return(0);
 }

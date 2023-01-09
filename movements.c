@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/12/21 13:15:50 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/09 12:55:02 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ra_mov(t_stack **stack_a)
 		current->n = current->next->n;
 		current = current->next;
 	}
-	current->n = num;
+	current->n = num; // como hemos recorrido arriba ahora esta es la ult pos
 	//free(num);
 }
 
@@ -74,7 +74,6 @@ void	rra_mov(t_stack **stack_a)
 	t_stack	*last_node;
 
 	last_node = NULL;
-
 	current = (t_stack *)malloc(sizeof(t_stack));
 	current->next = *stack_a;
 	while (current->next != NULL)
@@ -93,7 +92,6 @@ void	rrb_mov(t_stack **stack_b)
 	t_stack	*last_node;
 
 	last_node = NULL;
-
 	current = (t_stack *)malloc(sizeof(t_stack));
 	current->next = *stack_b;
 	while (current->next != NULL)
@@ -148,41 +146,39 @@ void	sa_mov(t_stack *stack_a)
 	int				i;
 	t_stack			*aux;
 
-
+	i = 0;
 	while (stack_a->next != NULL)
 		i++;
 	if (i >= 1)
 	{
 		aux = stack_a->next;
-		stack_a->n = stack_a->next;
+		stack_a->n = stack_a->next->n;
 		stack_a->next = aux;
 	}
 	//free (aux);
 }
 
-void	sb_mov(t_stack **stack_b) // revisar si esta bien o mmejor como el de arriba
+void	sb_mov(t_stack *stack_b)
 {
-	t_stack	*new_node;
 	int				i;
-	int				aux;
+	t_stack			*aux;
 
-	aux = 0;
-	while (new_node->next != NULL)
+	i = 0;
+	while (stack_b->next != NULL)
 		i++;
 	if (i >= 1)
 	{
-		aux = new_node->next;
-		new_node->n = new_node->next;
-		new_node->next = aux;
+		aux = stack_b->next;
+		stack_b->n = stack_b->next->n;
+		stack_b->next = aux;
 	}
 	//free (aux);
-	return (0);
 }
 
 void	ss_mov(t_stacks *s)
 {
-	sa_mov(&s->stack_a);
-	sb_mov(&s->stack_b);
+	sa_mov(s->stack_a);
+	sb_mov(s->stack_b);
 }
 
 int	check_empty(t_stack *s)
@@ -196,4 +192,17 @@ int	check_empty(t_stack *s)
 		return (0);
 	else
 		return (1);
+}
+
+void	ft_order3(char **argv)
+{
+	int i;
+	
+	i = 0;
+	if(argv[i] != '\0')
+	{
+		if(argv[i] > argv[i + 1] && argv[i + 1] > argv[i + 2])
+			printf("%s", "Ordenado");
+		
+	}
 }

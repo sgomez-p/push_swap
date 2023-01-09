@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:26:14 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/12/19 12:20:03 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:35:48 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_validation(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (ft_only_spaces(argv[i]))
+		if (ft_only_spaces(argv[i]) == 1)
 		{
 			ft_nbr(argv[i]);
 			ft_valid_str(argv[i]);
@@ -68,8 +68,6 @@ void	ft_nbr(const char *str)
 	ft_error();
 }
 
-
-
 void	ft_valid_str(const char *str)
 {
 	size_t	i;
@@ -81,17 +79,17 @@ void	ft_valid_str(const char *str)
 	sign = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] >= '0' && str[i] <= '9')
+		if (str[i] >= '0' && str[i] <= '9') //checkea q es numero
 			nbr++;
-		else if (str[i] == ' ' || str[i] == '\t')
+		else if (str[i] == ' ' || str[i] == '\t') //se mete si espacio
 		{
 			if (sign != 0 && nbr == 0)
 				ft_error();
-			nbr = 0;
+			nbr = 0;  //no se si hacen algo, pq reinicializan
 			sign = 0;
 		}
 		else if (((str[i] == '+' || str[i] == '-') &&
-				(sign == 0 && nbr == 0)) && (str[i + 1] != '\0'))
+				(sign == 0 && nbr == 0)) && (str[i + 1] != '\0')) //si es el primer signo y no es ell final
 			sign++;
 		else
 			ft_error();
@@ -99,37 +97,16 @@ void	ft_valid_str(const char *str)
 	}
 }
 
-
-/*
-void	ft_check_duplicate(data *new, stacks *stacks) // esto de data tengo que mirar como hacermelo
+int	check_dup(int n, t_stack *stack)
 {
-	int			*dup;
+	int	i;
 
-	if (!(dup = (int *)malloc(sizeof(int) * (new->next))))
-		exit(1);
-	dup = ft_intcpy(dup, new->a, new->next);
-	ft_quick_sort(dup, 0, new->next - 1);
-	ft_search_duplicate(dup, new->next - 1);
-	stacks->stack_a = new->next;
-	stacks->stack_b = 0;
-	stacks->min = dup[0];
-	stacks->med = dup[new->next / 2];
-	stacks->max = dup[new->next - 1];
-	free(dup);
-}
-*/
-
-/*
-void	ft_search_duplicate(const int *dup, int cont)
-{
-	int i;
-
-	i = 0;
-	while (i != cont)
+	i = stack->n;
+	while (i >= 0)
 	{
-		if (dup[i] == dup[i + 1])
-			ft_error();
-		i++;
+		if (stack->n == n)
+			return (0);
+		i--;
 	}
+	return (1);
 }
-*/
