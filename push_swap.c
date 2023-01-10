@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/09 15:35:46 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:07:55 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	write_stack_b(t_stack *stack_b)
 		current = current->next;
 	}
 }
-
+/*
 int	main(int argc, char **argv)
 {
 	t_stacks current;
@@ -91,6 +91,37 @@ int	main(int argc, char **argv)
 	create_stack(&current, argc, argv);
 	if(ft_validation(argc,argv))
 	{
+		write_stack_a(current.stack_a);
+		ft_putstr("-------\n");
+		ft_putstr("a");
+		ft_putstr("    ");
+		write_stack_b(current.stack_b);
+		ft_putstr("b");
+	}
+	//free(current);
+	return(0);
+}
+*/
+int	main(int argc, char **argv)
+{
+	int		stack_len;
+	t_stack	*aux;
+	t_stacks current;
+
+	aux = NULL;
+	stack_len = get_stack_len(*stack_a);
+	if (argc < 2)
+	{
+		ft_putstr("Introduce números a ordenar\n");
+		return 0;
+	}
+	create_stack(&current, argc, argv);
+	if(ft_validation(argc,argv))
+	{
+		//if (stack_len == 3)
+		//order3(stack);
+		if (stack_len <= 5)
+		order5(stack_a, &aux);
 		write_stack_a(current.stack_a);
 		ft_putstr("-------\n");
 		ft_putstr("a");
