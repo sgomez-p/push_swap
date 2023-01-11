@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/09 15:46:11 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:59:47 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,34 +110,34 @@ void	rrr_mov(t_stacks *s)
 	rrb_mov(&s->stack_b);
 }
 
-void	pa_mov(t_stack **stack_a, t_stack **stack_b)
+void	pa_mov(t_stack ***stack_a, t_stack ***stack_b)
 {
 	t_stack	*new_node;
 	t_stack	*new_node_2;
 
 	new_node = (t_stack *)malloc(sizeof(t_stack));
 	new_node_2 = (t_stack *)malloc(sizeof(t_stack));
-	new_node_2 = *stack_b;
-	new_node->next = *stack_a;
+	new_node_2 = *stack_b[0];
+	new_node->next = *stack_a[0];
 	new_node->n = new_node_2->n;
 	new_node_2 = new_node_2->next;
-	*stack_a = new_node;
-	*stack_b = new_node_2;
+	*stack_a[0] = new_node;
+	*stack_b[0] = new_node_2;
 }
 
-void	pb_mov(t_stack **stack_a, t_stack **stack_b)
+void	pb_mov(t_stack ***stack_a, t_stack ***stack_b)
 {
 	t_stack	*new_node;
 	t_stack	*new_node_2;
 
 	new_node = (t_stack *)malloc(sizeof(t_stack));
 	new_node_2 = (t_stack *)malloc(sizeof(t_stack));
-	new_node_2 = *stack_a;
-	new_node->next = *stack_b;
+	new_node_2 = *stack_a[0];
+	new_node->next = *stack_b[0];
 	new_node->n = new_node_2->n;
 	new_node_2 = new_node_2->next;
-	*stack_b = new_node;
-	*stack_a = new_node_2;
+	*stack_b[0] = new_node;
+	*stack_a[0] = new_node_2;
 }
 
 

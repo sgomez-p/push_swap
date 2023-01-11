@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/10 17:07:55 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:34:42 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	write_stack_a(t_stack *stack_a)
 		ft_putchar('\n');
 		current = current->next;
 	}
+	free(current);
 }
 
 void	write_stack_b(t_stack *stack_b)
@@ -78,6 +79,7 @@ void	write_stack_b(t_stack *stack_b)
 		ft_putnbr(current->n);
 		current = current->next;
 	}
+	free(current);
 }
 /*
 int	main(int argc, char **argv)
@@ -106,29 +108,38 @@ int	main(int argc, char **argv)
 {
 	int		stack_len;
 	t_stack	*aux;
-	t_stacks current;
+	t_stacks *current;
 
 	aux = NULL;
-	stack_len = get_stack_len(*stack_a);
+	current = (t_stacks *) malloc(sizeof(t_stacks) * 1);
+	create_stack(current, argc, argv);
+	stack_len = get_lenstack(current->stack_a);
 	if (argc < 2)
 	{
 		ft_putstr("Introduce números a ordenar\n");
 		return 0;
 	}
-	create_stack(&current, argc, argv);
 	if(ft_validation(argc,argv))
 	{
 		//if (stack_len == 3)
-		//order3(stack);
-		if (stack_len <= 5)
-		order5(stack_a, &aux);
-		write_stack_a(current.stack_a);
-		ft_putstr("-------\n");
+			//order3(stack);
+		write_stack_a(current->stack_a);
+		ft_putstr("1-------\n");
 		ft_putstr("a");
 		ft_putstr("    ");
-		write_stack_b(current.stack_b);
+		//write_stack_b(current->stack_b);
 		ft_putstr("b");
+		if (stack_len <= 5)
+		{
+			order5(&current->stack_a, &aux);
+			write_stack_a(current->stack_a);
+			ft_putstr("-------\n");
+			ft_putstr("    ");
+			write_stack_b(current->stack_b);
+			ft_putstr("b");
+		}
 	}
-	//free(current);
+	free(current);
 	return(0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/10 17:18:18 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:31:22 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ int get_lenstack(t_stack *stack)
 {
 	int i;
 	
-	i = 0;
+	if (!stack)
+		return (0);
+	i = 1;
 	while(stack->next != NULL)
 	{
 		i++;
-		stack->next;
+		stack = stack->next;
 	}
 	return (i);
 }
@@ -66,14 +68,14 @@ void order3(t_stack **stack_a) //no hace falta pasarnos nada al stackb asi q lo 
 	second = aux->next->n;
 	third = aux->next->next->n;
 	
-	while(1)
+	while(!(first < second < third))
 	{
 		if (second > third && second > first)
-			rra_mov(**stack_a);
+			rra_mov(stack_a);
 		else if(first > second && first > third)
-			ra_mov(**stack_a);
+			ra_mov(stack_a);
 		else if (first > second)
-			sa_mov(**stack_a);
+			sa_mov(*stack_a);
 		else
 			break ;
 	}
@@ -82,30 +84,22 @@ void order3(t_stack **stack_a) //no hace falta pasarnos nada al stackb asi q lo 
 
 void	order5(t_stack **stack_a, t_stack **stack_b)
 {
-	int	first;
-	int	second;
-	t_stack *aux;
-	
-	aux = *stack_b;
-	first = aux->n;
-	second = aux->next->n;
+	t_stack	*first;
+	t_stack	*second;
+	//t_stack *aux;
+	//aux = *stack_b;
 	if (get_lenstack(*stack_a) == 5)
 	{
-		pb_mov(stack_a, stack_b);
-		pb_mov(stack_a, stack_b);
-		order3(stack_a);
-		if (first > second)
-			sb_mov(*stack_b);
-		pa_mov(stack_a, stack_b);
-		pa_mov(stack_a, stack_b);
-	}
+		pb_mov(&stack_a, &stack_b);
+		pb_mov(&stack_a, &stack_b);
 	
-}
+		first = *stack_b;
+		second = first->next;
+		order3(stack_a);
+		if (first->n > second->n)
+			sb_mov(*stack_b);
+		pa_mov(&stack_a, &stack_b);
+		pa_mov(&stack_a, &stack_b);
+	}
 
-/*
-void	ft_translate(t_stack *stack)
-{
-	if(
-		small_finder(stack_a)
 }
-*/
