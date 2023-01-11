@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/11 15:34:42 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:17:32 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,14 @@ int	main(int argc, char **argv)
 		ft_putstr("1-------\n");
 		ft_putstr("a");
 		ft_putstr("    ");
-		//write_stack_b(current->stack_b);
+	//	write_stack_b(current->stack_b);
 		ft_putstr("b");
 		if (stack_len <= 5)
 		{
+			ft_putstr("\n\n\n");
 			order5(&current->stack_a, &aux);
 			write_stack_a(current->stack_a);
-			ft_putstr("-------\n");
+			ft_putstr("2-------\n");
 			ft_putstr("    ");
 			write_stack_b(current->stack_b);
 			ft_putstr("b");

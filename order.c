@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/11 15:31:22 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:22:06 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void order3(t_stack **stack_a) //no hace falta pasarnos nada al stackb asi q lo 
 	second = aux->next->n;
 	third = aux->next->next->n;
 	
-	while(!(first < second < third))
+	while(!(first < second && second < third))
 	{
 		if (second > third && second > first)
 			rra_mov(stack_a);
@@ -95,11 +95,17 @@ void	order5(t_stack **stack_a, t_stack **stack_b)
 	
 		first = *stack_b;
 		second = first->next;
+		ft_putstr("bababui");
 		order3(stack_a);
-		if (first->n > second->n)
-			sb_mov(*stack_b);
-		pa_mov(&stack_a, &stack_b);
-		pa_mov(&stack_a, &stack_b);
+		ft_putstr("mama");
+		while (get_lenstack(*stack_b) != 0)
+		{
+			if ((first) > (second))
+				sb_mov(*stack_b);
+			ft_putstr("macaco");
+			pa_mov(&stack_a, &stack_b);
+			pa_mov(&stack_a, &stack_b);
+		}
+		ft_putstr("cocacolo");
 	}
-
 }

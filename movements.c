@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/11 14:59:47 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:24:02 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	sa_mov(t_stack *stack_a)
 	t_stack			*aux;
 
 	i = 0;
+	aux = NULL;
 	while (stack_a->next != NULL)
 		i++;
 	if (i >= 1)
@@ -155,7 +156,7 @@ void	sa_mov(t_stack *stack_a)
 		stack_a->n = stack_a->next->n;
 		stack_a->next = aux;
 	}
-	//free (aux);
+	free (aux);
 }
 
 void	sb_mov(t_stack *stack_b)
@@ -164,6 +165,7 @@ void	sb_mov(t_stack *stack_b)
 	t_stack			*aux;
 
 	i = 0;
+	aux = NULL;
 	while (stack_b->next != NULL)
 		i++;
 	if (i >= 1)
@@ -172,7 +174,7 @@ void	sb_mov(t_stack *stack_b)
 		stack_b->n = stack_b->next->n;
 		stack_b->next = aux;
 	}
-	//free (aux);
+	free (aux);
 }
 
 void	ss_mov(t_stacks *s)
