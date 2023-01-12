@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:33:12 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/11 15:00:16 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:17:51 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	rrb_mov(t_stack **stack_b);
 void	rrr_mov(t_stacks *s);
 void	pa_mov(t_stack ***stack_a, t_stack ***stack_b);
 void	pb_mov(t_stack ***stack_a, t_stack ***stack_b);
-void	sa_mov(t_stack *stack_a);
-void	sb_mov(t_stack *stack_b);
+void	sa_mov(t_stack **stack_a);
+void	sb_mov(t_stack **stack_b);
 void	ss_mov(t_stacks *s);
 int		check_empty(t_stack *s);
 void	ft_order3(char **argv);
