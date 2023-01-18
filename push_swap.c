@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/12 12:39:05 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:24:20 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ int	main(int argc, char **argv)
 	return(0);
 }
 */
+
 int	main(int argc, char **argv)
 {
 	int		stack_len;
@@ -199,25 +200,78 @@ int	main(int argc, char **argv)
 	if(ft_validation(argc,argv))
 	{
 		//if (stack_len == 3)
-			//order3(stack);
+		//	order3(current->stack_a);
 		write_stack_a(current->stack_a);
-		ft_putstr("1-------\n");
+		ft_putstr("\n1-------\n");
 		ft_putstr("a");
 		ft_putstr("    ");
-	//	write_stack_b(current->stack_b);
 		ft_putstr("b");
-		if (stack_len <= 5)
+	//	write_stack_b(current->stack_b);
+		if (stack_len == 5)
 		{
 			ft_putstr("\n\n\n");
 			order5(&current->stack_a, &aux);
 			write_stack_a(current->stack_a);
-			ft_putstr("2-------\n");
+			ft_putstr("\n2-------\n");
+			ft_putstr("a");
 			ft_putstr("    ");
-			write_stack_b(current->stack_b);
-			ft_putstr("b");
+			ft_putstr("b      ");
 		}
 	}
 	free(current);
 	return 0;
 }
+
+void free_stack(t_stack *stack)
+{
+    t_stack *current = stack;
+    t_stack *next;
+
+    while (current != NULL)
+    {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+/*
+int	main(int argc, char **argv)
+{
+    int stack_len;
+    t_stack *aux;
+    t_stacks *current;
+
+    aux = NULL;
+    current = (t_stacks *) malloc(sizeof(t_stacks) * 1);
+    create_stack(current, argc, argv);
+    stack_len = get_lenstack(current->stack_a);
+
+    if (argc < 2)
+    {
+        ft_putstr("Introduce números a ordenar\n");
+        return 0;
+    }
+
+    if(ft_validation(argc,argv))
+    {
+        // Mostrar números iniciales
+        ft_putstr("Números iniciales: \n");
+        write_stack_a(current->stack_a);
+
+        if (stack_len == 5)
+        {
+            ft_putstr("\n\n\n");
+            order5(&current->stack_a, &aux);
+
+            // Mostrar números después de order5
+            ft_putstr("Números después de order5: \n");
+            write_stack_a(current->stack_a);
+        }
+    }
+    free(current);
+    return 0;
+}
+*/
+
 
