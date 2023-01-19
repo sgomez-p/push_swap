@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/17 11:05:13 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/19 11:48:45 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,28 +119,26 @@ void	rrr_mov(t_stacks *s)
 
 void	pa_mov(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack	*temp;
+    t_stack *temp;
 
-	if (!stack_a || !stack_b)
-		return;
-	if (!*stack_b)
-		return;
-	temp = *stack_b;
-	*stack_b = (*stack_b)->next;
-	temp->next = *stack_a;
-	*stack_a = temp;
-}
+    if (!stack_a || !stack_b)
+        return ;
+    temp = (*stack_b)->next;
+	(*stack_b)->next = *stack_a;
+    *stack_a = *stack_b;
+	*stack_b = temp;
+} // se han cambiado un poco pero funciona
 
 void	pb_mov(t_stack **stack_a, t_stack **stack_b)
 {
     t_stack *temp;
 
-    if (!stack_a || !*stack_a || !stack_b)
+    if (!stack_a || !stack_b)
         return ;
-    temp = *stack_a;
-    *stack_a = (*stack_a)->next;
-    temp->next = *stack_b;
-    *stack_b = temp;
+    temp = (*stack_a)->next;
+	(*stack_a)->next = *stack_b;
+    *stack_b = *stack_a;
+	*stack_a = temp;
 }
 
 

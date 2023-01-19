@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:33:12 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/17 10:20:26 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:12:13 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct t_stack //definimos lo q tiene cada stack individual
 
 typedef struct t_stacks //con esto accedemos a los stacks
 {
-	int		top;
 	int		size;
 	t_stack	*stack_a;
 	t_stack	*stack_b;
@@ -49,7 +48,7 @@ void	ft_nbr(const char *str);
 void	ft_valid_str(const char *str);
 int		ft_only_spaces(const char *str);
 int		check_dup(int n, t_stack *stack);
-void	order5(t_stack **stack_a, t_stack **stack_b);
+void order5(t_stack **stack_a, t_stack **stack_b);
 void 	order3(t_stack **stack_a);
 int 	get_lenstack(t_stack *stack);
 long	biggest_finder(t_stack *stack);
