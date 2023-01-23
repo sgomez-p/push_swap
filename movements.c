@@ -6,79 +6,75 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/21 13:23:49 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:15:18 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void ra_mov(t_stack **stack_a)
+void	ra_mov(t_stack **stack_a)
 {
-    t_stack *temp;
-    if(!stack_a || !*stack_a)
-        return ;
-    temp = *stack_a;
-    while(temp->next)
-        temp = temp->next;
-    temp->next = *stack_a;
-    *stack_a = (*stack_a)->next;
-    temp->next->next = NULL;
-}
-
-
-void rb_mov(t_stack **stack_b)
-{
-	t_stack *current, *temp;
-	int num;
-	if(!stack_b || !*stack_b)
-		return ;
-	current = *stack_b;
-	if(!current->next)
-		return ;
+	t_stack	*current;
+	int		num;
+	t_stack *first;
+	current = (t_stack *)malloc(sizeof(t_stack));
+	current = *stack_a;
 	num = current->n;
-	while (current->next->next != NULL)
+	current = current->next;
+	first = current;
+	while (current->next != NULL)
 	{
 		current = current->next;
 	}
-	temp = current->next;
-	current->next = NULL;
-	temp->next = *stack_b;
-	*stack_b = temp;
-	temp->n = num;
+	current->next = first;
+	first->next = NULL;
+	setup_pos(**stack_a);
+	//free(num);
 }
 
+void	rb_mov(t_stack **stack_b)
+{
+	t_stack	*current;
+	int		num;
+	t_stack *first;
+	current = (t_stack *)malloc(sizeof(t_stack));
+	current = *stack_b;
+	num = current->n;
+	current = current->next;
+	first = current;
+	while (current->next != NULL)
+	{
+		current = current->next;
+	}
+	current->next = first;
+	first->next = NULL;
+	setup_pos(**stack_b);
+	//free(num);
+}
 
 void	rr_mov(t_stacks *s)
 {
-	if(!s)
-		return ;
 	ra_mov(&s->stack_a);
 	rb_mov(&s->stack_b);
 }
 
 void	rra_mov(t_stack **stack_a)
 {
-    t_stack	*current;
-    t_stack	*last_node;
-    t_stack *temp;
+	t_stack	*current;
+	t_stack	*last_node;
 
-    if (!stack_a)
-        return ;
-    last_node = NULL;
-    //current = (t_stack *)malloc(sizeof(t_stack));
-    current = *stack_a;
-	if(!current)
-		return ;
-    while (current->next != NULL)
-    {
-        last_node = current;
-        current = current->next;
-    }
-    last_node->next = NULL;
-    temp = *stack_a;
-    *stack_a = current;
-    current->next = temp;
-    //free(current);
+	last_node = NULL;
+	current = (t_stack *)malloc(sizeof(t_stack));
+	current->next = *stack_a;
+	while (current->next != NULL)
+	{
+		last_node = current;
+		current = current->next;
+	}
+	last_node->next = NULL;
+	current->next = *stack_a;
+	stack_a = current;
+	setup_pos(stack_a);
+	//*stack_a = current;
 }
 
 void	rrb_mov(t_stack **stack_b)
@@ -86,11 +82,9 @@ void	rrb_mov(t_stack **stack_b)
 	t_stack	*current;
 	t_stack	*last_node;
 
-	if (!stack_b)
-        return ;
 	last_node = NULL;
-	//current = (t_stack *)malloc(sizeof(t_stack));
-	current = *stack_b;
+	current = (t_stack *)malloc(sizeof(t_stack));
+	current->next = *stack_b;
 	while (current->next != NULL)
 	{
 		last_node = current;
@@ -98,14 +92,12 @@ void	rrb_mov(t_stack **stack_b)
 	}
 	last_node->next = NULL;
 	current->next = *stack_b;
-	*stack_b = current;
-	//free(current);
+	stack_b = current;
+	setup_pos(stack_b);
 }
 
 void	rrr_mov(t_stacks *s)
 {
-	if(!s)
-		return ;
 	rra_mov(&s->stack_a);
 	rrb_mov(&s->stack_b);
 }

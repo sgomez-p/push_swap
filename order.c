@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/23 09:51:49 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:11:48 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 	print_stacks(*stack_a, *stack_b); //moverlo al principio del stack A
 } */
 
+/*
 void order5(t_stack **stack_a, t_stack **stack_b)
 {
 	int pos1, pos2;
@@ -225,12 +226,12 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 		else if (temp->site == 2)
 		{
 			pos2 = i;
-			printf("\npos2 es : %d",pos2);
+			printf("\npos2 es : %d\n",pos2);
 		}
 		temp = temp->next;
 		i++;
 	}
-
+	print_stacks(*stack_a, *stack_b);
 	// Move the two smallest numbers to the beginning of stack_a
 	if (pos1 > pos2)
 	{
@@ -248,7 +249,7 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 			i = 0;
 			while (i < pos2 - 1)
 			{
-				ra_mov(stack_a);
+				rra_mov(stack_a);
 				i++;
 			}
 		}
@@ -258,7 +259,7 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 		if (pos2 > 2)
 		{
 			i = 0;
-			while (i < pos2 - 1)
+			while (i < pos2 - 3)
 			{
 				rra_mov(stack_a);
 				i++;
@@ -268,7 +269,7 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 		if (pos1 > 1)
 		{
 			i = 0;
-			while (i < pos1)
+			while (i < pos1 - 2)
 			{
 				ra_mov(stack_a);
 				i++;
@@ -279,6 +280,7 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 	}
 	// Move the two smallest numbers to stack_b
 	ft_putstr("\n pre pb");
+	print_stacks(*stack_a, *stack_b);
 	pb_mov(stack_a, stack_b);
 	print_stacks(*stack_a, *stack_b);
 	pb_mov(stack_a, stack_b);
@@ -299,14 +301,14 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 			}
 		*stack_b = temp_b;
 		ft_putstr("\n 192 order5");
-		pa_mov(stack_b, stack_a);
+		pa_mov(stack_a, stack_b);
 		print_stacks(*stack_a, *stack_b);
-		pa_mov(stack_b, stack_a);
+		pa_mov(stack_a, stack_b);
 		print_stacks(*stack_a, *stack_b);
 		*stack_b = NULL;
 		ft_putstr("\n 195 order5\n");
 	
-}
+} */
 
 
 void find_smallest_numbers(t_stack **stack_a, int *pos1, int *pos2)

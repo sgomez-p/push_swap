@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/23 09:39:25 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:13:11 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	write_stack_b(t_stack *stack_b)
 	//free(current);
 }
 
-/*
+
 int	main(int argc, char **argv)
 {
 	int		stack_len;
@@ -174,7 +174,7 @@ void free_stack(t_stack *stack)
         free(current);
         current = next;
     }
-} */
+}
 
 /*
 int main(int argc, char **argv)
@@ -214,7 +214,7 @@ int main(int argc, char **argv)
 
 
 
-
+/*
 int	main(int argc, char **argv)
 {
     int stack_len;
@@ -250,12 +250,12 @@ int	main(int argc, char **argv)
     }
     free(current);
     return 0;
-}
+} */
 
 
 
-
-/* void order5(t_stack **stack_a, t_stack **stack_b)
+/*
+void order5(t_stack **stack_a, t_stack **stack_b)
 {
 	int pos1, pos2;
 	int i;
@@ -344,8 +344,8 @@ int	main(int argc, char **argv)
     pb_mov(stack_a, stack_b);
     while (pos2-- > 0)
         ra_mov(stack_a);
-    pb_mov(stack_a, stack_b);  */
-  /*  ft_putstr("\n pb1");
+    pb_mov(stack_a, stack_b);
+  	ft_putstr("\n pb1");
 	pb_mov(stack_a, stack_b);
 	print_stacks(*stack_a, *stack_b);
     ft_putstr("\n pb2");
