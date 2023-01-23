@@ -6,49 +6,37 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/23 15:15:18 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:00:28 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-void	ra_mov(t_stack **stack_a)
+void ra_mov(t_stack **stack_a)
 {
-	t_stack	*current;
-	int		num;
-	t_stack *first;
-	current = (t_stack *)malloc(sizeof(t_stack));
-	current = *stack_a;
-	num = current->n;
-	current = current->next;
-	first = current;
-	while (current->next != NULL)
-	{
-		current = current->next;
-	}
-	current->next = first;
-	first->next = NULL;
-	setup_pos(**stack_a);
-	//free(num);
+    t_stack *temp;
+    temp = *stack_a;
+    if (temp != NULL)
+    {
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = *stack_a;
+        *stack_a = (*stack_a)->next;
+        temp->next->next = NULL;
+    }
 }
 
-void	rb_mov(t_stack **stack_b)
+void rb_mov(t_stack **stack_b)
 {
-	t_stack	*current;
-	int		num;
-	t_stack *first;
-	current = (t_stack *)malloc(sizeof(t_stack));
-	current = *stack_b;
-	num = current->n;
-	current = current->next;
-	first = current;
-	while (current->next != NULL)
-	{
-		current = current->next;
-	}
-	current->next = first;
-	first->next = NULL;
-	setup_pos(**stack_b);
-	//free(num);
+    t_stack *temp;
+    temp = *stack_b;
+    if (temp != NULL)
+    {
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = *stack_b;
+        *stack_b = (*stack_b)->next;
+        temp->next->next = NULL;
+    }
 }
 
 void	rr_mov(t_stacks *s)
@@ -57,43 +45,42 @@ void	rr_mov(t_stacks *s)
 	rb_mov(&s->stack_b);
 }
 
-void	rra_mov(t_stack **stack_a)
+void rra_mov(t_stack **stack_a)
 {
-	t_stack	*current;
-	t_stack	*last_node;
-
-	last_node = NULL;
-	current = (t_stack *)malloc(sizeof(t_stack));
-	current->next = *stack_a;
-	while (current->next != NULL)
-	{
-		last_node = current;
-		current = current->next;
-	}
-	last_node->next = NULL;
-	current->next = *stack_a;
-	stack_a = current;
-	setup_pos(stack_a);
-	//*stack_a = current;
+    t_stack *temp;
+    t_stack *last;
+    temp = *stack_a;
+    if (temp != NULL)
+    {
+        last = NULL;
+        while (temp->next != NULL)
+        {
+            last = temp;
+            temp = temp->next;
+        }
+        last->next = NULL;
+        temp->next = *stack_a;
+        *stack_a = temp;
+    }
 }
 
 void	rrb_mov(t_stack **stack_b)
 {
-	t_stack	*current;
-	t_stack	*last_node;
-
-	last_node = NULL;
-	current = (t_stack *)malloc(sizeof(t_stack));
-	current->next = *stack_b;
-	while (current->next != NULL)
-	{
-		last_node = current;
-		current = current->next;
-	}
-	last_node->next = NULL;
-	current->next = *stack_b;
-	stack_b = current;
-	setup_pos(stack_b);
+    t_stack *temp;
+    t_stack *last;
+    temp = *stack_b;
+    if (temp != NULL)
+    {
+        last = NULL;
+        while (temp->next != NULL)
+        {
+            last = temp;
+            temp = temp->next;
+        }
+        last->next = NULL;
+        temp->next = *stack_b;
+        *stack_b = temp;
+    }
 }
 
 void	rrr_mov(t_stacks *s)
