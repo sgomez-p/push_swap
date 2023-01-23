@@ -6,54 +6,47 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/19 11:48:45 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:23:49 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ra_mov(t_stack **stack_a)
+void ra_mov(t_stack **stack_a)
 {
-	t_stack			*current;
-	int				num;
-
-	if(!stack_a || !*stack_a)
-		return ;
-	current = *stack_a;
-	if(!current)
-		return ;
-	num = current->n;
-	while (current->next != NULL)
-	{
-		current->n = current->next->n;
-		current = current->next;
-	}
-	current->next = *stack_a;// como hemos recorrido arriba ahora esta es la ult pos
-	*stack_a = current;
-	current->n = num;
+    t_stack *temp;
+    if(!stack_a || !*stack_a)
+        return ;
+    temp = *stack_a;
+    while(temp->next)
+        temp = temp->next;
+    temp->next = *stack_a;
+    *stack_a = (*stack_a)->next;
+    temp->next->next = NULL;
 }
 
-void	rb_mov(t_stack **stack_b)
-{
-	t_stack	*current;
-	int		num;
 
+void rb_mov(t_stack **stack_b)
+{
+	t_stack *current, *temp;
+	int num;
 	if(!stack_b || !*stack_b)
 		return ;
 	current = *stack_b;
 	if(!current->next)
 		return ;
 	num = current->n;
-	current = current->next;
 	while (current->next->next != NULL)
 	{
-		current->n = current->next->n;
 		current = current->next;
 	}
-	current->next = *stack_b;// como hemos recorrido arriba ahora esta es la ult pos
-	*stack_b = current;
-	current->n = num;
+	temp = current->next;
+	current->next = NULL;
+	temp->next = *stack_b;
+	*stack_b = temp;
+	temp->n = num;
 }
+
 
 void	rr_mov(t_stacks *s)
 {
@@ -117,29 +110,30 @@ void	rrr_mov(t_stacks *s)
 	rrb_mov(&s->stack_b);
 }
 
-void	pa_mov(t_stack **stack_a, t_stack **stack_b)
+void pa_mov(t_stack **stack_a, t_stack **stack_b)
 {
     t_stack *temp;
-
-    if (!stack_a || !stack_b)
-        return ;
-    temp = (*stack_b)->next;
-	(*stack_b)->next = *stack_a;
-    *stack_a = *stack_b;
-	*stack_b = temp;
-} // se han cambiado un poco pero funciona
-
-void	pb_mov(t_stack **stack_a, t_stack **stack_b)
-{
-    t_stack *temp;
-
-    if (!stack_a || !stack_b)
-        return ;
-    temp = (*stack_a)->next;
-	(*stack_a)->next = *stack_b;
-    *stack_b = *stack_a;
-	*stack_a = temp;
+    if (*stack_b)
+    {
+        temp = *stack_b;
+        *stack_b = (*stack_b)->next;
+        temp->next = *stack_a;
+        *stack_a = temp;
+    }
 }
+
+void pb_mov(t_stack **stack_a, t_stack **stack_b)
+{
+    t_stack *temp;
+    if (*stack_a)
+    {
+        temp = *stack_a;
+        *stack_a = (*stack_a)->next;
+        temp->next = *stack_b;
+        *stack_b = temp;
+    }
+}
+
 
 
 

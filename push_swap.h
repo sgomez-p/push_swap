@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:33:12 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/19 18:12:13 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/23 09:50:57 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ void	ss_mov(t_stacks *s);
 int		check_empty(t_stack *s);
 void 	setup_pos(t_stack *s);
 void 	site_pos(t_stack *s);
+void 	find_smallest_numbers(t_stack **stack_a, int *pos1, int *pos2);
+void 	print_stack_a(t_stack *stack_a);
+void order4(t_stack **stack_a, t_stack **stack_b);
+void print_stacks(t_stack *stack_a, t_stack *stack_b);
 
 //void	ft_check_duplicate(data *new, stacks *stacks);
 #endif
