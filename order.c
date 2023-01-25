@@ -6,11 +6,163 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/23 22:14:37 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/25 12:22:29 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void quicksort(t_stack **stack_a, t_stack **stack_b, int low, int high)
+{
+    //int pivot;
+    int i;
+    int j;
+    int temp;
+    t_stack *current;
+
+    if (low < high)
+    {
+        //pivot = low;
+        i = low;
+        j = high;
+        current = *stack_a;
+        while (i < j)
+        {
+            while (current->n <= current->next->n && i < high)
+            {
+                current = current->next;
+                i++;
+                if (current == NULL || current->next == NULL)
+                    break;
+            }
+            while (current->next->n > current->next->next->n && j > low)
+            {
+                current = current->next;
+                j--;
+                if (current == NULL || current->next == NULL || current->next->next == NULL)
+                    break;
+            }
+            if (i < j)
+            {
+                temp = current->next->n;
+                current->next->n = current->next->next->n;
+                current->next->next->n = temp;
+            }
+        }
+        quicksort(stack_a, stack_b, low, j);
+        quicksort(stack_a, stack_b, j + 1, high);
+    }
+}
+
+int partition(t_stack **stack_a, t_stack **stack_b, int low, int high)
+{
+    int pivot = (*stack_a)[high].n;
+    int i = (low - 1);
+    int j;
+    t_stack temp;
+    for (j = low; j <= high - 1; j++)
+    {
+        if ((*stack_a)[j].n <= pivot)
+        {
+            i++;
+            temp = (*stack_a)[i];
+            (*stack_a)[i] = (*stack_a)[j];
+            (*stack_a)[j] = temp;
+            pb_mov(stack_a, stack_b);
+        }
+    }
+    temp = (*stack_a)[i + 1];
+    (*stack_a)[i + 1] = (*stack_a)[high];
+    (*stack_a)[high] = temp;
+    pb_mov(stack_a, stack_b);
+    return (i + 1);
+}
+
+int find_pivot(t_stack **stack_a, int low, int high)
+{
+    int mid;
+
+    mid = (low + high) / 2;
+    if ((*stack_a)[low].n > (*stack_a)[mid].n && (*stack_a)[low].n < (*stack_a)[high].n)
+        return (low);
+    else if ((*stack_a)[mid].n > (*stack_a)[low].n && (*stack_a)[mid].n < (*stack_a)[high].n)
+        return (mid);
+    else
+		return (high);
+}
+
+void divide_a(t_stack **stack_a, t_stack **stack_b)
+{
+    int pivot;
+    int size = get_lenstack(*stack_a);
+    pivot = find_pivot(stack_a, 0, size - 1);
+
+    while (get_lenstack(*stack_a) > 0)
+    {
+        if ((*stack_a)->n < pivot)
+        {
+            pb_mov(stack_a, stack_b);
+        }
+        else
+        {
+            ra_mov(stack_a);
+        }
+    }
+
+    if (get_lenstack(*stack_b) > 0)
+        divide_b(stack_b, stack_a);
+
+    while (get_lenstack(*stack_b) > 0)
+        pa_mov(stack_b, stack_a);
+
+    if (get_lenstack(*stack_a) > 1)
+        divide_a(stack_a, stack_b);
+}
+
+void divide_b(t_stack **stack_b, t_stack **stack_a)
+{
+    int pivot;
+    int size = get_lenstack(*stack_b);
+    pivot = find_pivot(stack_b, 0, size - 1);
+
+    while (get_lenstack(*stack_b) > 0)
+    {
+        if ((*stack_b)->n >= pivot)
+        {
+            pa_mov(stack_b, stack_a);
+        }
+        else
+        {
+            rb_mov(stack_b);
+        }
+    }
+
+    if (get_lenstack(*stack_a) > 1)
+        divide_a(stack_a, stack_b);
+
+    while (get_lenstack(*stack_a) > 0)
+        pb_mov(stack_a, stack_b);
+
+    if (get_lenstack(*stack_b) > 1)
+       divide_b(stack_b, stack_a);
+}
+
+
+void order500(t_stack **stack_a, t_stack **stack_b, int size)
+{
+    quicksort(stack_a, stack_b, 0, size - 1);
+}
+
+void add_elem(t_stack **stack, int elem)
+{
+    t_stack *new;
+    if (!(new = (t_stack *)malloc(sizeof(t_stack))))
+        return;
+    new->n = elem;
+    new->next = *stack;
+    *stack = new;
+}
+
 
 void order3(t_stack **stack_a)
 {
@@ -24,14 +176,11 @@ void order3(t_stack **stack_a)
 		first = (*stack_a)->n;
 		second = (*stack_a)->next->n;
 		third = (*stack_a)->next->next->n;
-		ft_putstr("\norder3 70:");
-		print_stack_a(*stack_a);
 		while (!(first < second && second < third))
 		{
 			if (first > second && first > third)
 			{	
 				ra_mov(stack_a);
-				//sa_mov(stack_a);
 			}
 			else if (first > second && third > second)
 			{ 
@@ -45,8 +194,6 @@ void order3(t_stack **stack_a)
 			second = (*stack_a)->next->n;
 			third = (*stack_a)->next->next->n;
 		}
-		ft_putstr("\norder3 87:");
-		print_stack_a(*stack_a);
 }
 
 void order4(t_stack **stack_a)
@@ -88,13 +235,19 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 	}
 	while ((*stack_a)->n != first)
 		{
-			ra_mov(stack_a);
+			if (first > get_lenstack(*stack_a)/2)
+				rra_mov(stack_a);
+			else
+				ra_mov(stack_a);
 		}
 	pb_mov(stack_a, stack_b);
 	//print_stacks(*stack_a, *stack_b);
 	while ((*stack_a)->n != second) 
 	{
-	ra_mov(stack_a);
+		if (second > get_lenstack(*stack_a)/2)
+				rra_mov(stack_a);
+			else
+				ra_mov(stack_a);
 	}
 	//print_stacks(*stack_a, *stack_b);
 	pb_mov(stack_a, stack_b);
@@ -106,7 +259,7 @@ void order5(t_stack **stack_a, t_stack **stack_b)
 		sb_mov(stack_b);
 	pa_mov(stack_a, stack_b);
 	pa_mov(stack_a, stack_b);
-	print_stacks(*stack_a, *stack_b);
+	//print_stacks(*stack_a, *stack_b);
 }
 
 void setup_pos(t_stack *s) // asignamos las posiciones donde se encuentra actualmente cada numero

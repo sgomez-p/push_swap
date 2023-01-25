@@ -6,11 +6,12 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/23 18:00:28 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:57:34 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
 void ra_mov(t_stack **stack_a)
 {
     t_stack *temp;
@@ -23,6 +24,7 @@ void ra_mov(t_stack **stack_a)
         *stack_a = (*stack_a)->next;
         temp->next->next = NULL;
     }
+    ft_putstr("ra\n");
 }
 
 void rb_mov(t_stack **stack_b)
@@ -37,6 +39,7 @@ void rb_mov(t_stack **stack_b)
         *stack_b = (*stack_b)->next;
         temp->next->next = NULL;
     }
+    ft_putstr("rb\n");
 }
 
 void	rr_mov(t_stacks *s)
@@ -62,6 +65,7 @@ void rra_mov(t_stack **stack_a)
         temp->next = *stack_a;
         *stack_a = temp;
     }
+    ft_putstr("rra\n");
 }
 
 void	rrb_mov(t_stack **stack_b)
@@ -81,6 +85,7 @@ void	rrb_mov(t_stack **stack_b)
         temp->next = *stack_b;
         *stack_b = temp;
     }
+    ft_putstr("rrb\n");
 }
 
 void	rrr_mov(t_stacks *s)
@@ -99,6 +104,7 @@ void pa_mov(t_stack **stack_a, t_stack **stack_b)
         temp->next = *stack_a;
         *stack_a = temp;
     }
+    ft_putstr("pa\n");
 }
 
 void pb_mov(t_stack **stack_a, t_stack **stack_b)
@@ -111,10 +117,8 @@ void pb_mov(t_stack **stack_a, t_stack **stack_b)
         temp->next = *stack_b;
         *stack_b = temp;
     }
+    ft_putstr("pb\n");
 }
-
-
-
 
 void sa_mov(t_stack **stack_a) 
 {
@@ -125,6 +129,7 @@ void sa_mov(t_stack **stack_a)
 	*stack_a = (*stack_a)->next;
 	temp->next = (*stack_a)->next;
 	(*stack_a)->next = temp;
+    ft_putstr("sa\n");
 }
 
 
@@ -138,6 +143,7 @@ void sb_mov(t_stack **stack_b)
 	*stack_b = (*stack_b)->next;
 	temp->next = (*stack_b)->next;
 	(*stack_b)->next = temp;
+    ft_putstr("sb\n");
 }
 
 
@@ -162,18 +168,3 @@ int	check_empty(t_stack *s)
 	else
 		return (1);
 }
-
-
-/*
-void	ft_order3(char **argv)
-{
-	int i;
-	
-	i = 0;
-	if(argv[i] != NULL)
-	{
-		if(argv[i] > argv[i + 1] && argv[i + 1] > argv[i + 2])
-			printf("%s", "Ordenado");
-		
-	}
-}*/
