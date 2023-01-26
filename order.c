@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/25 12:22:29 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/26 12:18:52 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void quicksort(t_stack **stack_a, t_stack **stack_b, int low, int high)
 {
-    //int pivot;
     int i;
     int j;
     int temp;
@@ -22,7 +21,6 @@ void quicksort(t_stack **stack_a, t_stack **stack_b, int low, int high)
 
     if (low < high)
     {
-        //pivot = low;
         i = low;
         j = high;
         current = *stack_a;
@@ -32,15 +30,11 @@ void quicksort(t_stack **stack_a, t_stack **stack_b, int low, int high)
             {
                 current = current->next;
                 i++;
-                if (current == NULL || current->next == NULL)
-                    break;
             }
             while (current->next->n > current->next->next->n && j > low)
             {
                 current = current->next;
                 j--;
-                if (current == NULL || current->next == NULL || current->next->next == NULL)
-                    break;
             }
             if (i < j)
             {
@@ -48,10 +42,11 @@ void quicksort(t_stack **stack_a, t_stack **stack_b, int low, int high)
                 current->next->n = current->next->next->n;
                 current->next->next->n = temp;
             }
-        }
-        quicksort(stack_a, stack_b, low, j);
-        quicksort(stack_a, stack_b, j + 1, high);
     }
+    quicksort(stack_a, stack_b, low, j);
+    quicksort(stack_a, stack_b, i, high);
+    }
+
 }
 
 int partition(t_stack **stack_a, t_stack **stack_b, int low, int high)
@@ -161,6 +156,39 @@ void add_elem(t_stack **stack, int elem)
     new->n = elem;
     new->next = *stack;
     *stack = new;
+}
+
+void	reverseorder3(t_stack **stack_a)
+{
+    int first;
+    int second;
+    int third;
+
+    if (!stack_a || !*stack_a)
+        return ;
+
+    first = (*stack_a)->n;
+    second = (*stack_a)->next->n;
+    third = (*stack_a)->next->next->n;
+
+    while (!(first > second && second > third))
+    {
+        if (first < second && first < third)
+        {   
+            rra_mov(stack_a);
+        }
+        else if (first < second && third < second)
+        { 
+            sa_mov(stack_a);
+            ra_mov(stack_a);
+        }
+        else if (second < first && second < third)
+            rra_mov(stack_a);
+
+        first = (*stack_a)->n;
+        second = (*stack_a)->next->n;
+        third = (*stack_a)->next->next->n;
+    }
 }
 
 

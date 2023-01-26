@@ -6,13 +6,13 @@
 #    By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 14:27:09 by sgomez-p          #+#    #+#              #
-#    Updated: 2023/01/16 16:54:24 by sgomez-p         ###   ########.fr        #
+#    Updated: 2023/01/26 11:48:50 by sgomez-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= push_swap
 SRCS			= ft_putchar.c ft_putnbr.c ft_putstr.c ft_atoi.c push_swap.c validate.c \
-				movements.c order.c
+				movements.c order.c chunk.c
 
 OBJS			= $(SRCS:.c=.o)
 CC				= gcc
