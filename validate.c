@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:26:14 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/12 11:30:34 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:49:54 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	ft_error(void)
 	exit(1);
 }
 
-int		ft_validation(int argc, char **argv)
+int	ft_validation(int argc, char **argv)
 {
-	int i;
-	int ret;
+	int	i;
+	int	ret;
 
 	ret = 0;
 	i = 1;
@@ -38,15 +38,15 @@ int		ft_validation(int argc, char **argv)
 	return (ret);
 }
 
-int		ft_only_spaces(const char *str)
+int	ft_only_spaces(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-			|| str[i] == ' ' || str[i] == '\r' || str[i] == '\f')
+		if (str[i] == '\n' || str[i] == '\t' || str[i] == '\v' || str[i] == ' '
+			|| str[i] == '\r' || str[i] == '\f')
 			i++;
 		else
 			return (1);
@@ -56,7 +56,7 @@ int		ft_only_spaces(const char *str)
 
 void	ft_nbr(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -85,11 +85,13 @@ void	ft_valid_str(const char *str)
 		{
 			if (sign != 0 && nbr == 0)
 				ft_error();
-			nbr = 0;  //no se si hacen algo, pq reinicializan
+			nbr = 0; //no se si hacen algo, pq reinicializan
 			sign = 0;
 		}
 		else if (((str[i] == '+' || str[i] == '-') &&
-				(sign == 0 && nbr == 0)) && (str[i + 1] != '\0')) //si es el primer signo y no es ell final
+					(sign == 0 && nbr == 0)) &&
+					(str[i + 1] != '\0'))
+			//si es el primer signo y no es ell final
 			sign++;
 		else
 			ft_error();
@@ -99,12 +101,12 @@ void	ft_valid_str(const char *str)
 
 int	check_dup(int n, t_stack *stack)
 {
-	int	i;
+	int i;
 
-	i = stack->n;
+	i = stack->nbr;
 	while (i >= 0)
 	{
-		if (stack->n == n)
+		if (stack->nbr == n)
 			return (0);
 		i--;
 	}

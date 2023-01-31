@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 11:47:13 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/26 12:59:10 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:48:22 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	get_chunk_size_by_stacklen(int item, int stack_len, int tot_chunks)
 	return (size);
 }
 
-static t_chunk_sizes	get_chunk_sizes(int item, int stack_len, int tot_chunks)
+t_chunk_sizes	get_chunk_sizes(int item, int stack_len, int tot_chunks)
 {
 	t_chunk_sizes	chunk;
 
@@ -51,32 +51,62 @@ static t_chunk_sizes	get_chunk_sizes(int item, int stack_len, int tot_chunks)
 	return (chunk);
 }
 
-void	order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
+t_chunk_item	get_chunk_next_item(t_stack *stack, int max, int stack_len)
 {
-	int		b_len;
-	int		maxstack_len;
-	t_chunk	c;
+	int				i;
+	t_chunk_item	first;
+	t_chunk_item	last;
 
-	maxstack_len = get_lenstack(*stack_a);
-	b_len = 0;
-	while (b_len < maxstack_len)
+	i = 0;
+	first.pos = -1;
+	while (stack != NULL)
 	{
-		c.sizes = get_chunk_sizes(b_len, maxstack_len, tot_chunks);
-		c.item.nbr = get_chunk_next_item(*stack_a, c.sizes.max, maxstack_len - b_len);
-		prepare_pushb(stack_a, stack_b, &c);
-		pb_mov(stack_a, stack_b);
-		if (++b_len == 3)
-			reverseorder3(*stack_b);
+		if (stack->order <= max && first.pos == -1)
+		{
+			first.nbr = stack->order;
+			first.pos = i;
+		}
+		if (stack->order <= max && first.pos != -1)
+		{
+			last.nbr = stack->order;
+			last.pos = (stack_len - i) * -1;
+		}
+		stack = stack->next;
+		i++;
 	}
-	push_src_to_dts(stack_b, stack_a);
+	if (first.pos <= (last.pos * -1))
+		return (first);
+	return (last);
 }
 
+static void	prepareb_nextchunk(t_stack **stack_a, t_stack **stack_b,
+		t_chunk *chunk)
+{
+	int		len_a;
+	t_stack	*aux;
+
+	len_a = get_lenstack(*stack_a);
+	while (1)
+	{
+		aux = *stack_b;
+		if (aux->order >= chunk->sizes.min)
+			break ;
+		if (chunk->item.pos != 0)
+		{
+			rrr_mov(stack_a, stack_b);
+			chunk->item = get_chunk_next_item(*stack_a, chunk->sizes.max,
+					len_a); //mirar si hace falta item.nbr
+		}
+		else
+			rrb_mov(stack_b); // no se si es rb_mov
+	}
+}
 void	push_src_to_dts(t_stack **src, t_stack **dst)
 {
 	int		len;
 	t_stack	*aux;
 
-	len = get_stack_len(*src);
+	len = get_lenstack(*src);
 	aux = *src;
 	while (aux->order != len)
 	{
@@ -84,7 +114,7 @@ void	push_src_to_dts(t_stack **src, t_stack **dst)
 		aux = *src;
 	}
 	while (len--)
-		pa_mov(src, *dst);
+		pa_mov(src, dst);
 }
 
 static t_stack_stats	get_stack_stats(t_stack *stack, int min)
@@ -128,7 +158,8 @@ static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 {
 	int	b_moves;
 
-	b_moves = get_stackb_move(get_stack_stats(*stack_b, c.sizes.min), c.item.nbr);
+	b_moves = get_stackb_move(get_stack_stats(*stack_b, c.sizes.min),
+			c.item.nbr);
 	if (b_moves > 0 && c.item.pos > 0)
 		rrr_mov(stack_a, stack_b);
 	else if (b_moves < 0 && c.item.pos < 0)
@@ -141,7 +172,7 @@ static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 			ra_mov(stack_a);
 		if (b_moves > 0)
 			rb_mov(stack_b);
-		else if (b_moves < 0 )
+		else if (b_moves < 0)
 			rb_mov(stack_b);
 		else if (c.item.pos == 0)
 			return (0);
@@ -149,30 +180,9 @@ static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 	return (1);
 }
 
-static void	prepareb_nextchunk(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
-{
-	int		len_a;
-	t_stack	*aux;
-
-	len_a = get_stack_len(*stack_a);
-	while (1)
-	{
-		aux = *stack_b;
-		if (aux->order >= chunk->sizes.min)
-			break ;
-		if (chunk->item.pos != 0)
-		{
-			rrr_mov(stack_a, stack_b);
-			chunk->item.nbr = get_chunk_next_item(*stack_a, chunk->sizes.max, len_a);
-		}
-		else
-			rrb_mov(stack_b); // no se si es rb_mov
-	}
-}
-
 void	prepare_pushb(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
 {
-	if (get_stack_len(*stack_b) > 2)
+	if (get_lenstack(*stack_b) > 2)
 	{
 		prepareb_nextchunk(stack_a, stack_b, chunk);
 		while (1)
@@ -191,3 +201,24 @@ void	prepare_pushb(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
 			rra_mov(stack_a);
 	}
 }
+/*
+void	order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
+{
+	int		b_len;
+	int		maxstack_len;
+	t_chunk	c;
+
+	maxstack_len = get_lenstack(*stack_a);
+	b_len = 0;
+	while (b_len < maxstack_len)
+	{
+		c.sizes = get_chunk_sizes(b_len, maxstack_len, tot_chunks);
+		c.item = get_chunk_next_item(*stack_a, c.sizes.max, maxstack_len
+				- b_len);
+		prepare_pushb(stack_a, stack_b, &c);
+		pb_mov(stack_a, stack_b);
+		if (++b_len == 3)
+			reverseorder3(stack_b);
+	}
+	push_src_to_dts(stack_b, stack_a);
+} */

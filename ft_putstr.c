@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:43:43 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/11/29 14:41:20 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:49:38 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putstr(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])
