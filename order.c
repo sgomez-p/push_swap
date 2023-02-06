@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/31 11:15:39 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:24:35 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,19 +217,54 @@ void	order3(t_stack **stack_a)
 	}
 }
 
-void	order4(t_stack **stack_a)
+void order4(t_stack **stack_a, t_stack **stack_b)
 {
-	order3(stack_a);
-	while ((*stack_a)->next->next->next)
+	int		first;
+	int		second;
+	t_stack *temp;
+	t_stack *temp_b;
+	temp = *stack_a;
+	first = INT_MAX;
+	second = INT_MAX;
+	while (temp != NULL)
 	{
-		if ((*stack_a)->nbr > (*stack_a)->next->next->next->nbr)
+		if (temp->nbr <= first)
+		{
+			second = first;
+			first = temp->nbr;
+		}
+		else if (temp->nbr <= second)
+		{
+			second = temp->nbr;
+		}
+		temp = temp->next;
+	}
+	while ((*stack_a)->nbr != first)
+	{
+		if (first > get_lenstack(*stack_a) / 2)
 			rra_mov(stack_a);
 		else
 			ra_mov(stack_a);
 	}
-	if ((*stack_a)->nbr > (*stack_a)->next->nbr)
+	pb_mov(stack_a, stack_b);
+	while ((*stack_a)->nbr != second)
+	{
+		if (second > get_lenstack(*stack_a) / 2)
+			rra_mov(stack_a);
+		else
+			ra_mov(stack_a);
+	}
+	pb_mov(stack_a, stack_b);
+	if (temp->nbr > temp->next->nbr)
 		sa_mov(stack_a);
+	temp_b = *stack_b;
+	if (temp_b->next->next && (temp_b->next > temp_b->next->next))
+		sb_mov(stack_b);
+	pa_mov(stack_a, stack_b);
+	pa_mov(stack_a, stack_b);
+	print_stack_a(*stack_a);
 }
+
 
 void	order5(t_stack **stack_a, t_stack **stack_b)
 {
@@ -262,7 +297,6 @@ void	order5(t_stack **stack_a, t_stack **stack_b)
 			ra_mov(stack_a);
 	}
 	pb_mov(stack_a, stack_b);
-	//print_stacks(*stack_a, *stack_b);
 	while ((*stack_a)->nbr != second)
 	{
 		if (second > get_lenstack(*stack_a) / 2)
@@ -270,21 +304,17 @@ void	order5(t_stack **stack_a, t_stack **stack_b)
 		else
 			ra_mov(stack_a);
 	}
-	//print_stacks(*stack_a, *stack_b);
 	pb_mov(stack_a, stack_b);
 	temp_b = *stack_b;
-	//print_stacks(*stack_a, *stack_b);
 	order3(stack_a);
-	//print_stacks(*stack_a, *stack_b);
 	if (temp_b->next->next && (temp_b->next > temp_b->next->next))
 		sb_mov(stack_b);
 	pa_mov(stack_a, stack_b);
 	pa_mov(stack_a, stack_b);
-	//print_stacks(*stack_a, *stack_b);
 }
 
 void	setup_pos(t_stack *s)
-	// asignamos las posiciones donde se encuentra actualmente cada numero
+// asignamos las posiciones donde se encuentra actualmente cada numero
 {
 	int i;
 
@@ -347,6 +377,7 @@ void	print_stack_a(t_stack *stack_a)
 	printf("\n");
 }
 
+/*
 void	site_pos(t_stack *s)
 {
 	t_stack	*current;
@@ -369,8 +400,8 @@ void	site_pos(t_stack *s)
 		current->site = count;
 		current = current->next;
 	}
-}
-
+} */
+/*
 void	find_smallest_numbers(t_stack **stack_a, int *pos1, int *pos2)
 {
 	int		i;
@@ -425,3 +456,4 @@ long	biggest_finder(t_stack *stack) // hacemos por algo el stack a?
 	}
 	return (big);
 }
+*/

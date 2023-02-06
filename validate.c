@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:26:14 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/31 10:49:54 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:15:37 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_validation(int argc, char **argv)
 	{
 		if (ft_only_spaces(argv[i]) == 1)
 		{
-			ft_nbr(argv[i]);
+			is_nbr(argv[i]);
 			ft_valid_str(argv[i]);
 			ret = 1;
 		}
@@ -54,7 +54,7 @@ int	ft_only_spaces(const char *str)
 	return (0);
 }
 
-void	ft_nbr(const char *str)
+void	is_nbr(const char *str)
 {
 	int	i;
 

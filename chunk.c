@@ -6,14 +6,14 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 11:47:13 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/31 10:48:22 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:24:01 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 static int	get_chunk_size_by_stacklen(int item, int stack_len, int tot_chunks)
-{
+{ //determina tamaño de chunk segun la longitud del stack y el total de chunks
 	int	size;
 
 	size = 0;
@@ -41,7 +41,7 @@ static int	get_chunk_size_by_stacklen(int item, int stack_len, int tot_chunks)
 }
 
 t_chunk_sizes	get_chunk_sizes(int item, int stack_len, int tot_chunks)
-{
+{ // aporta info del tamaño minimo, maximo y medio de chunk
 	t_chunk_sizes	chunk;
 
 	chunk.size = get_chunk_size_by_stacklen(item, stack_len, tot_chunks);
@@ -51,24 +51,24 @@ t_chunk_sizes	get_chunk_sizes(int item, int stack_len, int tot_chunks)
 	return (chunk);
 }
 
-t_chunk_item	get_chunk_next_item(t_stack *stack, int max, int stack_len)
-{
+t_chunk_order	get_chunk_next_item(t_stack *stack, int max, int stack_len)
+{ // contiene info sobre el siguiente elemento a ser manipulado
 	int				i;
-	t_chunk_item	first;
-	t_chunk_item	last;
+	t_chunk_order	first;
+	t_chunk_order	last;
 
 	i = 0;
 	first.pos = -1;
 	while (stack != NULL)
 	{
-		if (stack->order <= max && first.pos == -1)
+		if (stack->site <= max && first.pos == -1)
 		{
-			first.nbr = stack->order;
+			first.nbr = stack->site;
 			first.pos = i;
 		}
-		if (stack->order <= max && first.pos != -1)
+		if (stack->site <= max && first.pos != -1)
 		{
-			last.nbr = stack->order;
+			last.nbr = stack->site;
 			last.pos = (stack_len - i) * -1;
 		}
 		stack = stack->next;
@@ -79,9 +79,9 @@ t_chunk_item	get_chunk_next_item(t_stack *stack, int max, int stack_len)
 	return (last);
 }
 
-static void	prepareb_nextchunk(t_stack **stack_a, t_stack **stack_b,
+void	stack_b_nextchunk(t_stack **stack_a, t_stack **stack_b,
 		t_chunk *chunk)
-{
+{ //prepara el chunk para ser utilizado moviendo de un stack al otro
 	int		len_a;
 	t_stack	*aux;
 
@@ -89,7 +89,7 @@ static void	prepareb_nextchunk(t_stack **stack_a, t_stack **stack_b,
 	while (1)
 	{
 		aux = *stack_b;
-		if (aux->order >= chunk->sizes.min)
+		if (aux->site >= chunk->sizes.min)
 			break ;
 		if (chunk->item.pos != 0)
 		{
@@ -98,17 +98,18 @@ static void	prepareb_nextchunk(t_stack **stack_a, t_stack **stack_b,
 					len_a); //mirar si hace falta item.nbr
 		}
 		else
-			rrb_mov(stack_b); // no se si es rb_mov
+			rrb_mov(stack_b);
 	}
 }
+
 void	push_src_to_dts(t_stack **src, t_stack **dst)
-{
+{ // mueve todo de un stack a otro
 	int		len;
 	t_stack	*aux;
 
 	len = get_lenstack(*src);
 	aux = *src;
-	while (aux->order != len)
+	while (aux->site != len)
 	{
 		rrb_mov(dst);
 		aux = *src;
@@ -117,30 +118,30 @@ void	push_src_to_dts(t_stack **src, t_stack **dst)
 		pa_mov(src, dst);
 }
 
-static t_stack_stats	get_stack_stats(t_stack *stack, int min)
-{
-	t_stack_stats	result;
+static t_stack_values	get_stack_value(t_stack *stack, int min)
+{ //contiene info sobre el stack: el 1 segundo minimo y max del stack
+	t_stack_values	result;
 
-	result.first = stack->order;
-	result.second = stack->next->order;
+	result.first = stack->site;
+	result.second = stack->next->site;
 	result.min = min;
 	result.max = 0;
 	while (stack != NULL)
 	{
-		if (result.max < stack->order)
-			result.max = stack->order;
-		if (result.min > stack->order && result.min > min)
-			result.min = stack->order;
-		if (result.min == min && result.min < stack->order)
-			result.min = stack->order;
-		result.last = stack->order;
+		if (result.max < stack->site)
+			result.max = stack->site;
+		if (result.min > stack->site && result.min > min)
+			result.min = stack->site;
+		if (result.min == min && result.min < stack->site)
+			result.min = stack->site;
+		result.last = stack->site;
 		stack = stack->next;
 	}
 	return (result);
 }
 
-static int	get_stackb_move(t_stack_stats s, int nbr)
-{
+static int	get_stackb_move(t_stack_values s, int nbr)
+{ //determina el movimiento para mover un elemento a stack_b
 	if (s.first > nbr && s.first > s.second)
 	{
 		if (s.last == s.min && s.first == s.max && s.last > nbr)
@@ -155,12 +156,12 @@ static int	get_stackb_move(t_stack_stats s, int nbr)
 }
 
 static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
-{
+{ 
 	int	b_moves;
 
-	b_moves = get_stackb_move(get_stack_stats(*stack_b, c.sizes.min),
-			c.item.nbr);
-	if (b_moves > 0 && c.item.pos > 0)
+	b_moves = get_stackb_move(get_stack_value(*stack_b, c.sizes.min),
+			c.item.nbr); //se pasa el chunk y se comprueba 
+	if (b_moves > 0 && c.item.pos > 0) // si b_moves > 0 hay q mover hacia inicio d stack
 		rrr_mov(stack_a, stack_b);
 	else if (b_moves < 0 && c.item.pos < 0)
 		rrr_mov(stack_a, stack_b);
@@ -180,11 +181,11 @@ static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 	return (1);
 }
 
-void	prepare_pushb(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
+void	pre_pb(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
 {
 	if (get_lenstack(*stack_b) > 2)
 	{
-		prepareb_nextchunk(stack_a, stack_b, chunk);
+		stack_b_nextchunk(stack_a, stack_b, chunk);
 		while (1)
 		{
 			if (!move_stacks(stack_a, stack_b, *chunk))
@@ -201,24 +202,3 @@ void	prepare_pushb(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
 			rra_mov(stack_a);
 	}
 }
-/*
-void	order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
-{
-	int		b_len;
-	int		maxstack_len;
-	t_chunk	c;
-
-	maxstack_len = get_lenstack(*stack_a);
-	b_len = 0;
-	while (b_len < maxstack_len)
-	{
-		c.sizes = get_chunk_sizes(b_len, maxstack_len, tot_chunks);
-		c.item = get_chunk_next_item(*stack_a, c.sizes.max, maxstack_len
-				- b_len);
-		prepare_pushb(stack_a, stack_b, &c);
-		pb_mov(stack_a, stack_b);
-		if (++b_len == 3)
-			reverseorder3(stack_b);
-	}
-	push_src_to_dts(stack_b, stack_a);
-} */
