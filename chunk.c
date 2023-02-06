@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 11:47:13 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/06 08:58:39 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:51:22 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	get_chunk_size_by_stacklen(int pos, int stack_len, int tot_chunks)
 		else if (pos < 401)
 			size = 25;
 		else if (pos < 501)
-			size = 20;
+			size = 11; // un man dice q con 11 chunks da menos movemientos
 	}
 	else
 		size = stack_len / tot_chunks;
@@ -47,7 +47,7 @@ t_chunk_sizes	get_chunk_sizes(int pos, int stack_len, int tot_chunks)
 	chunk.size = get_chunk_size_by_stacklen(pos, stack_len, tot_chunks);
 	chunk.max = (1 + pos / chunk.size) * chunk.size;
 	chunk.min = chunk.max - chunk.size;
-	chunk.mid = chunk.size + (chunk.max - chunk.size) / 2;
+	chunk.mid = chunk.size + chunk.min / 2;
 	return (chunk);
 }
 
@@ -119,7 +119,7 @@ void	push_src_to_dts(t_stack **src, t_stack **dst)
 }
 
 static t_stack_values	get_stack_value(t_stack *stack, int min)
-{ //contiene info sobre el stack: el 1 segundo minimo y max del stack
+{ //contiene info sobre el stack: el 1, segundo, minimo y max del stack
 	t_stack_values	result;
 
 	result.first = stack->site;
@@ -162,7 +162,7 @@ static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 	b_moves = get_stackb_move(get_stack_value(*stack_b, c.sizes.min),
 			c.order.nbr); //se pasa el chunk y se comprueba 
 	if (b_moves > 0 && c.order.pos > 0) // si b_moves > 0 hay q mover hacia inicio d stack
-		rrr_mov(stack_a, stack_b);
+		rrr_mov(stack_a, stack_b); // mirar si en los 2 son rrr
 	else if (b_moves < 0 && c.order.pos < 0)
 		rrr_mov(stack_a, stack_b);
 	else
@@ -172,7 +172,7 @@ static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 		else if (c.order.pos < 0)
 			ra_mov(stack_a);
 		if (b_moves > 0)
-			rb_mov(stack_b);
+			rb_mov(stack_b); // aqui no es rrb?
 		else if (b_moves < 0)
 			rb_mov(stack_b);
 		else if (c.order.pos == 0)
