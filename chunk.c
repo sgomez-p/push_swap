@@ -6,33 +6,33 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 11:47:13 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/02 18:24:01 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/06 08:58:39 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	get_chunk_size_by_stacklen(int item, int stack_len, int tot_chunks)
-{ //determina tamaño de chunk segun la longitud del stack y el total de chunks
+static int	get_chunk_size_by_stacklen(int pos, int stack_len, int tot_chunks)
+{ //determina tamaño de chunk segun la longitud del stack y el total de chunks en los q se van a dividir
 	int	size;
 
 	size = 0;
 	if (stack_len == 100)
 	{
-		if (item < 51)
+		if (pos < 51)
 			size = 20;
-		else if (item < 91)
+		else if (pos < 91)
 			size = 15;
-		else if (item < 101)
+		else if (pos < 101)
 			size = 10;
 	}
 	else if (stack_len == 500)
 	{
-		if (item < 251)
+		if (pos < 251)
 			size = 50;
-		else if (item < 401)
+		else if (pos < 401)
 			size = 25;
-		else if (item < 501)
+		else if (pos < 501)
 			size = 20;
 	}
 	else
@@ -40,18 +40,18 @@ static int	get_chunk_size_by_stacklen(int item, int stack_len, int tot_chunks)
 	return (size);
 }
 
-t_chunk_sizes	get_chunk_sizes(int item, int stack_len, int tot_chunks)
+t_chunk_sizes	get_chunk_sizes(int pos, int stack_len, int tot_chunks)
 { // aporta info del tamaño minimo, maximo y medio de chunk
 	t_chunk_sizes	chunk;
 
-	chunk.size = get_chunk_size_by_stacklen(item, stack_len, tot_chunks);
-	chunk.max = (1 + item / chunk.size) * chunk.size;
+	chunk.size = get_chunk_size_by_stacklen(pos, stack_len, tot_chunks);
+	chunk.max = (1 + pos / chunk.size) * chunk.size;
 	chunk.min = chunk.max - chunk.size;
 	chunk.mid = chunk.size + (chunk.max - chunk.size) / 2;
 	return (chunk);
 }
 
-t_chunk_order	get_chunk_next_item(t_stack *stack, int max, int stack_len)
+t_chunk_order	get_chunk_next_pos(t_stack *stack, int max, int stack_len)
 { // contiene info sobre el siguiente elemento a ser manipulado
 	int				i;
 	t_chunk_order	first;
@@ -91,11 +91,11 @@ void	stack_b_nextchunk(t_stack **stack_a, t_stack **stack_b,
 		aux = *stack_b;
 		if (aux->site >= chunk->sizes.min)
 			break ;
-		if (chunk->item.pos != 0)
+		if (chunk->order.pos != 0)
 		{
 			rrr_mov(stack_a, stack_b);
-			chunk->item = get_chunk_next_item(*stack_a, chunk->sizes.max,
-					len_a); //mirar si hace falta item.nbr
+			chunk->order = get_chunk_next_pos(*stack_a, chunk->sizes.max,
+					len_a); //mirar si hace falta pos.nbr
 		}
 		else
 			rrb_mov(stack_b);
@@ -160,22 +160,22 @@ static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 	int	b_moves;
 
 	b_moves = get_stackb_move(get_stack_value(*stack_b, c.sizes.min),
-			c.item.nbr); //se pasa el chunk y se comprueba 
-	if (b_moves > 0 && c.item.pos > 0) // si b_moves > 0 hay q mover hacia inicio d stack
+			c.order.nbr); //se pasa el chunk y se comprueba 
+	if (b_moves > 0 && c.order.pos > 0) // si b_moves > 0 hay q mover hacia inicio d stack
 		rrr_mov(stack_a, stack_b);
-	else if (b_moves < 0 && c.item.pos < 0)
+	else if (b_moves < 0 && c.order.pos < 0)
 		rrr_mov(stack_a, stack_b);
 	else
 	{
-		if (c.item.pos > 0)
+		if (c.order.pos > 0)
 			ra_mov(stack_a);
-		else if (c.item.pos < 0)
+		else if (c.order.pos < 0)
 			ra_mov(stack_a);
 		if (b_moves > 0)
 			rb_mov(stack_b);
 		else if (b_moves < 0)
 			rb_mov(stack_b);
-		else if (c.item.pos == 0)
+		else if (c.order.pos == 0)
 			return (0);
 	}
 	return (1);
@@ -190,15 +190,15 @@ void	pre_pb(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
 		{
 			if (!move_stacks(stack_a, stack_b, *chunk))
 				break ;
-			chunk->item.pos -= (chunk->item.pos > 0);
-			chunk->item.pos += (chunk->item.pos < 0);
+			chunk->order.pos -= (chunk->order.pos > 0);
+			chunk->order.pos += (chunk->order.pos < 0);
 		}
 	}
 	else
 	{
-		while (chunk->item.pos > 0 && chunk->item.pos--)
+		while (chunk->order.pos > 0 && chunk->order.pos--)
 			ra_mov(stack_a);
-		while (chunk->item.pos < 0 && chunk->item.pos++)
+		while (chunk->order.pos < 0 && chunk->order.pos++)
 			rra_mov(stack_a);
 	}
 }

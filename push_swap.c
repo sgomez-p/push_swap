@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/02 20:24:55 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/06 08:59:30 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,24 +144,24 @@ void write_stack_b(t_stack *stack_b)
 void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 {
 	int b_len;
-	int maxstack_len;
+	int len_stack_max;
 	t_chunk c;
 
-	maxstack_len = get_lenstack(*stack_a);
+	len_stack_max = get_lenstack(*stack_a);
 	b_len = 0;
-	while (b_len < maxstack_len)
+	while (b_len < len_stack_max)
 	{
-		c.sizes = get_chunk_sizes(b_len, maxstack_len, tot_chunks);
-		c.item = get_chunk_next_item(*stack_a, c.sizes.max, maxstack_len - b_len);
+		c.sizes = get_chunk_sizes(b_len, len_stack_max, tot_chunks);
+		c.order = get_chunk_next_pos(*stack_a, c.sizes.max, len_stack_max - b_len);
 		pre_pb(stack_a, stack_b, &c);
 		pb_mov(stack_a, stack_b);
 		if (++b_len == 3)
-			reverseorder3(stack_b);
+			order3(stack_b); // no se si hace falta reverseorder3
 	}
 	push_src_to_dts(stack_b, stack_a);
 }
 
-int get_next_move_default(t_stack *stack, int nbr, int len)
+int get_next_move(t_stack *stack, int nbr, int len)
 {
 	int first;
 	int last;
@@ -196,7 +196,7 @@ void orderbydefault(t_stack **stack_a, t_stack **stack_b)
 	len = get_lenstack(*stack_a);
 	while (len)
 	{
-		move = get_next_move_default(*stack_a, ++next, len--);
+		move = get_next_move(*stack_a, ++next, len--);
 		while (move > 0 && move--)
 			ra_mov(stack_a);
 		while (move < 0 && move++)
@@ -207,7 +207,7 @@ void orderbydefault(t_stack **stack_a, t_stack **stack_b)
 		pa_mov(stack_a, stack_b);
 }
 
-static void do_rotate(t_stack **stack)
+static void filter_by_stack(t_stack **stack)
 {
 	int stack_len;
 	t_stack *aux;
@@ -252,41 +252,41 @@ static int exists(int nbr, t_stack *stack)
 	return (0);
 }
 
-static int valid_range_int(const char *s_nbr)
+static int valid_range_int(const char *str_nbr)
 {
 	long l;
 	long is_signed;
 
 	l = 0;
-	is_signed = (long)(s_nbr[0] == '-');
-	while (*s_nbr != '\0' && !ft_isspace(*s_nbr) && l < INT_MAX)
+	is_signed = (long)(str_nbr[0] == '-');
+	while (*str_nbr != '\0' && !ft_isspace(*str_nbr) && l < INT_MAX)
 	{
-		if (ft_isdigit(*s_nbr))
-			l = l * 10 + *s_nbr - '0';
-		s_nbr++;
+		if (ft_isdigit(*str_nbr))
+			l = l * 10 + *str_nbr - '0';
+		str_nbr++;
 	}
 	if (l > INT_MAX + is_signed)
 		return (0);
 	return (1);
 }
 
-static int check_nbr(char *const_s_nbr)
+static int check_nbr(char *const_str_nbr)
 {
-	char *s_nbr;
+	char *str_nbr;
 
-	s_nbr = (char *)const_s_nbr;
-	if (!(ft_isdigit(s_nbr[0])) &&
-		!(ft_isdigit(s_nbr[1]) && (s_nbr[0] == '-' || s_nbr[0] == '+')))
+	str_nbr = (char *)const_str_nbr;
+	if (!(ft_isdigit(str_nbr[0])) &&
+		!(ft_isdigit(str_nbr[1]) && (str_nbr[0] == '-' || str_nbr[0] == '+')))
 		return (0);
-	if (*s_nbr == '-' || *s_nbr == '+')
-		s_nbr++;
-	while (*s_nbr != '\0' && !ft_isspace(*s_nbr))
+	if (*str_nbr == '-' || *str_nbr == '+')
+		str_nbr++;
+	while (*str_nbr != '\0' && !ft_isspace(*str_nbr))
 	{
-		if (!ft_isdigit(*s_nbr))
+		if (!ft_isdigit(*str_nbr))
 			return (0);
-		s_nbr++;
+		str_nbr++;
 	}
-	return (s_nbr - const_s_nbr);
+	return (str_nbr - const_str_nbr);
 }
 
 static void ft_lstadd_back_nbr(t_stack **stack, int nbr)
@@ -304,39 +304,43 @@ static void ft_lstadd_back_nbr(t_stack **stack, int nbr)
 	else
 	{
 		aux = *stack;
-		aux->site += (aux->nbr > new->nbr);
-		new->site += (new->nbr > aux->nbr);
+		if (aux->nbr > new->nbr)
+			aux->site += 1;
+		else
+			new->site += 1;
 		while (new->pos++ && aux->next != NULL)
 		{
 			aux = aux->next;
-			aux->site += (aux->nbr > new->nbr);
-			new->site += (new->nbr > aux->nbr);
+			if (aux->nbr > new->nbr)
+				aux->site += 1;
+			else
+				new->site += 1;
 		}
 		aux->next = new;
 	}
 }
 
-int parse_nbr(char *s_nbr, t_stack **stack)
+int nbr_is_valid(char *str_nbr, t_stack **stack)
 {
 	int nbr;
 	int read;
 
-	while (ft_isspace(*s_nbr))
-		s_nbr++;
-	read = check_nbr(s_nbr);
+	while (ft_isspace(*str_nbr))
+		str_nbr++;
+	read = check_nbr(str_nbr);
 	if (!read)
 		return (0);
-	if (!valid_range_int(s_nbr))
+	if (!valid_range_int(str_nbr))
 		return (0);
-	nbr = ft_atoi(s_nbr);
+	nbr = ft_atoi(str_nbr);
 	if (exists(nbr, *stack))
 		return (0);
 	ft_lstadd_back_nbr(stack, nbr);
-	s_nbr += read;
-	while (ft_isspace(*s_nbr))
-		s_nbr++;
-	if (*s_nbr != '\0')
-		return (parse_nbr(s_nbr, stack));
+	str_nbr += read;
+	while (ft_isspace(*str_nbr))
+		str_nbr++;
+	if (*str_nbr != '\0')
+		return (nbr_is_valid(str_nbr, stack));
 	return (1);
 }
 
@@ -351,7 +355,7 @@ int main(int argc, char **argv)
 	stack_a = NULL;
 	while (++i < argc)
 	{
-		if (!parse_nbr(argv[i], &stack_a))
+		if (!nbr_is_valid(argv[i], &stack_a))
 		{
 			write(1, "Error\n", 7);
 			error = EINVAL;
@@ -359,7 +363,7 @@ int main(int argc, char **argv)
 		}
 	}
 	if (!error && !isordered(stack_a))
-		do_rotate(&stack_a);
+		filter_by_stack(&stack_a);
 	ft_freestack(&stack_a);
 	return (error);
 }
