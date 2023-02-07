@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/06 15:08:15 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/06 22:20:47 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void write_stack_b(t_stack *stack_b)
 	}
 	// free(current);
 }
-/*
+
 void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 {
 	int b_len;
@@ -156,10 +156,10 @@ void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 		pre_pb(stack_a, stack_b, &c);
 		pb_mov(stack_a, stack_b);
 		if (++b_len == 3)
-			order3(stack_b); // no se si hace falta reverseorder3
+			reverseorder3(stack_b); // no se si hace falta reverseorder3
 	}
 	push_src_to_dts(stack_b, stack_a);
-} */
+}
 
 int get_next_move(t_stack *stack, int nbr, int len)
 {
@@ -222,8 +222,8 @@ static void filter_by_stack(t_stack **stack)
 		order4(stack, &aux);
 	else if (stack_len == 5)
 		order5(stack, &aux);
-	//else if (stack_len == 100 || stack_len == 500)
-	//	order_with_chunks(stack, &aux, 11);
+	else if (stack_len == 100 || stack_len == 500)
+		order_with_chunks(stack, &aux, 5);
 	else
 		orderbydefault(stack, &aux);
 }
