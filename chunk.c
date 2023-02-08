@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 11:47:13 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/06 22:19:47 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:36:43 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	get_chunk_size_by_stacklen(int pos, int stack_len, int tot_chunks)
 		else if (pos < 401)
 			size = 25;
 		else if (pos < 501)
-			size = 11; // un man dice q con 11 chunks da menos movemientos
+			size = 20; // un man dice q con 11 chunks da menos movemientos
 	}
 	else
 		size = stack_len / tot_chunks;
@@ -47,7 +47,7 @@ t_chunk_sizes	get_chunk_sizes(int pos, int stack_len, int tot_chunks)
 	chunk.size = get_chunk_size_by_stacklen(pos, stack_len, tot_chunks);
 	chunk.max = (1 + pos / chunk.size) * chunk.size;
 	chunk.min = chunk.max - chunk.size;
-	chunk.mid = chunk.size + chunk.min / 2;
+	chunk.mid = chunk.size + (chunk.max - chunk.size) / 2;
 	return (chunk);
 }
 
@@ -102,20 +102,21 @@ void	stack_b_nextchunk(t_stack **stack_a, t_stack **stack_b,
 	}
 }
 
-void	push_src_to_dts(t_stack **src, t_stack **dst)
+void	push_src_to_dts(t_stack **stack_a, t_stack **stack_b)
 { // mueve todo de un stack a otro
 	int		len;
 	t_stack	*aux;
 
-	len = get_lenstack(*src);
-	aux = *src;
+	len = get_lenstack(*stack_a);
+	aux = *stack_a;
 	while (aux->site != len)
 	{
-		rrb_mov(dst);
-		aux = *src;
+		rrb_mov(stack_b);
+		aux = *stack_a;
 	}
 	while (len--)
-		pa_mov(src, dst);
+		pa_mov(stack_a, stack_b);
+	ft_putstr("salimos de aca");
 }
 
 static t_stack_values	get_stack_value(t_stack *stack, int min)
@@ -201,4 +202,5 @@ void	pre_pb(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
 		while (chunk->order.pos < 0 && chunk->order.pos++)
 			rra_mov(stack_a);
 	}
+	ft_putstr("salimos de pre_pb");
 }

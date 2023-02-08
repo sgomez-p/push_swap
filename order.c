@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/06 14:58:29 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:37:02 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,33 +158,28 @@ void	add_elem(t_stack **stack, int elem)
 	*stack = new;
 }
 
-void	reverseorder3(t_stack **stack_a)
+void	reverseorder3(t_stack **stack_b)
 {
-	int	first;
-	int	second;
-	int	third;
+	int		first;
+	int		second;
+	int		third;
+	t_stack	*aux;
 
-	if (!stack_a || !*stack_a)
-		return ;
-	first = (*stack_a)->nbr;
-	second = (*stack_a)->next->nbr;
-	third = (*stack_a)->next->next->nbr;
-	while (!(first > second && second > third))
+	while (1)
 	{
-		if (first < second && first < third)
-		{
-			rra_mov(stack_a);
-		}
-		else if (first < second && third < second)
-		{
-			sa_mov(stack_a);
-			ra_mov(stack_a);
-		}
-		else if (second < first && second < third)
-			rra_mov(stack_a);
-		first = (*stack_a)->nbr;
-		second = (*stack_a)->next->nbr;
-		third = (*stack_a)->next->next->nbr;
+		aux = *stack_b;
+		first = aux->nbr * -1;
+		second = aux->next->nbr * -1;
+		third = aux->next->next->nbr * -1;
+		ft_putstr("pinga");
+		if (second > first && second > third)
+			rrb_mov(stack_b);
+		else if (first > second && first > third)
+			rb_mov(stack_b);
+		else if (first > second)
+			sb_mov(stack_b);
+		else
+			break ;
 	}
 }
 

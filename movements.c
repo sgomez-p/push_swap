@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/01/30 11:31:57 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:37:46 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	rr_mov(t_stack **stack_a, t_stack **stack_b)
 	}
 	ra_mov(stack_a);
 	rb_mov(stack_b);
+    ft_putstr("rr\n");
 }
 
 void rra_mov(t_stack **stack_a)

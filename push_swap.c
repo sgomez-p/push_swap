@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/06 22:20:47 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:40:55 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,77 +70,6 @@ int ft_isspace(char c)
 	return (c == 32 || (c >= 9 && c <= 13));
 }
 
-void create_stack(t_stacks *situ, int argc, char **argv)
-{
-	t_stack *current;
-	int i;
-
-	current = (t_stack *)malloc(sizeof(t_stack));
-	if (!current)
-	{
-		ft_putstr("Error al reservar memoria\n");
-		exit(1);
-	}
-	situ->stack_a = current;
-	current->next = NULL;
-	i = 1;
-	while (i < argc)
-	{
-		if (ft_isint(argv[i]) && (check_dup(ft_atoi(argv[i]), (situ->stack_a))))
-		{
-			current->nbr = ft_atoi(argv[i]);
-			if (i + 1 < argc)
-			{
-				current->next = (t_stack *)malloc(sizeof(t_stack));
-				if (!(current->next))
-				{
-					ft_putstr("Error al reservar memoria\n");
-					exit(1);
-				}
-				current = current->next;
-				current->next = NULL;
-			}
-			i++;
-		}
-		else
-			ft_error();
-	}
-}
-
-void write_stack_a(t_stack *stack_a)
-{
-	t_stack *current;
-
-	current = stack_a;
-	while (current != NULL)
-	{
-		ft_putnbr(current->nbr);
-		ft_putchar('\n');
-		current = current->next;
-	}
-	// free(current);
-}
-
-void write_stack_b(t_stack *stack_b)
-{
-	t_stack *current;
-
-	if (stack_b == NULL)
-	{
-		ft_putstr("    ");
-		return;
-	}
-	current = stack_b;
-	while (current != NULL)
-	{
-		ft_putstr("       ");
-		ft_putnbr(current->nbr);
-		current = current->next;
-		ft_putstr("\n");
-	}
-	// free(current);
-}
-
 void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 {
 	int b_len;
@@ -155,10 +84,12 @@ void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 		c.order = get_chunk_next_pos(*stack_a, c.sizes.max, len_stack_max - b_len);
 		pre_pb(stack_a, stack_b, &c);
 		pb_mov(stack_a, stack_b);
-		if (++b_len == 3)
+		b_len = get_lenstack(*stack_b);
+		len_stack_max = get_lenstack(*stack_a);
+		if (b_len == 3)
 			reverseorder3(stack_b); // no se si hace falta reverseorder3
 	}
-	push_src_to_dts(stack_b, stack_a);
+	push_src_to_dts(stack_a, stack_b);
 }
 
 int get_next_move(t_stack *stack, int nbr, int len)
@@ -367,3 +298,75 @@ int main(int argc, char **argv)
 	ft_freestack(&stack_a);
 	return (error);
 }
+
+/*
+void create_stack(t_stacks *situ, int argc, char **argv)
+{
+	t_stack *current;
+	int i;
+
+	current = (t_stack *)malloc(sizeof(t_stack));
+	if (!current)
+	{
+		ft_putstr("Error al reservar memoria\n");
+		exit(1);
+	}
+	situ->stack_a = current;
+	current->next = NULL;
+	i = 1;
+	while (i < argc)
+	{
+		if (ft_isint(argv[i]) && (check_dup(ft_atoi(argv[i]), (situ->stack_a))))
+		{
+			current->nbr = ft_atoi(argv[i]);
+			if (i + 1 < argc)
+			{
+				current->next = (t_stack *)malloc(sizeof(t_stack));
+				if (!(current->next))
+				{
+					ft_putstr("Error al reservar memoria\n");
+					exit(1);
+				}
+				current = current->next;
+				current->next = NULL;
+			}
+			i++;
+		}
+		else
+			ft_error();
+	}
+}
+
+void write_stack_a(t_stack *stack_a)
+{
+	t_stack *current;
+
+	current = stack_a;
+	while (current != NULL)
+	{
+		ft_putnbr(current->nbr);
+		ft_putchar('\n');
+		current = current->next;
+	}
+	// free(current);
+}
+
+void write_stack_b(t_stack *stack_b)
+{
+	t_stack *current;
+
+	if (stack_b == NULL)
+	{
+		ft_putstr("    ");
+		return;
+	}
+	current = stack_b;
+	while (current != NULL)
+	{
+		ft_putstr("       ");
+		ft_putnbr(current->nbr);
+		current = current->next;
+		ft_putstr("\n");
+	}
+	// free(current);
+} */
