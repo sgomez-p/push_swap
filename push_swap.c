@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/08 10:40:55 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/09 12:42:34 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 		c.order = get_chunk_next_pos(*stack_a, c.sizes.max, len_stack_max - b_len);
 		pre_pb(stack_a, stack_b, &c);
 		pb_mov(stack_a, stack_b);
-		b_len = get_lenstack(*stack_b);
-		len_stack_max = get_lenstack(*stack_a);
+		//b_len = get_lenstack(*stack_b);
+		//len_stack_max = get_lenstack(*stack_a);
 		if (b_len == 3)
 			reverseorder3(stack_b); // no se si hace falta reverseorder3
 	}
@@ -93,7 +93,7 @@ void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 }
 
 int get_next_move(t_stack *stack, int nbr, int len)
-{
+{ //almacena la posicion del numero que buscamos y lo almacena en first
 	int first;
 	int last;
 	int i;
@@ -154,7 +154,7 @@ static void filter_by_stack(t_stack **stack)
 	else if (stack_len == 5)
 		order5(stack, &aux);
 	else if (stack_len == 100 || stack_len == 500)
-		order_with_chunks(stack, &aux, 5);
+		order_with_chunks(stack, &aux, 8);
 	else
 		orderbydefault(stack, &aux);
 }

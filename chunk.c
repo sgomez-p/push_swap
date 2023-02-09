@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 11:47:13 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/08 10:36:43 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:48:36 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,28 +118,26 @@ void	push_src_to_dts(t_stack **stack_a, t_stack **stack_b)
 		pa_mov(stack_a, stack_b);
 	ft_putstr("salimos de aca");
 }
-
 static t_stack_values	get_stack_value(t_stack *stack, int min)
-{ //contiene info sobre el stack: el 1, segundo, minimo y max del stack
-	t_stack_values	result;
-
-	result.first = stack->site;
-	result.second = stack->next->site;
-	result.min = min;
-	result.max = 0;
-	while (stack != NULL)
-	{
-		if (result.max < stack->site)
-			result.max = stack->site;
-		if (result.min > stack->site && result.min > min)
-			result.min = stack->site;
-		if (result.min == min && result.min < stack->site)
-			result.min = stack->site;
-		result.last = stack->site;
-		stack = stack->next;
-	}
-	return (result);
+{
+    t_stack_values	result;
+// esta medio cambiada
+    result.first = stack->site;
+    result.second = (stack->next) ? stack->next->site : 0;
+    result.min = min;
+    result.max = stack->site;
+    while (stack != NULL)
+    {
+        if (stack->site > result.max)
+            result.max = stack->site;
+        if (stack->site < result.min)
+            result.min = stack->site;
+        result.last = stack->site;
+        stack = stack->next;
+    }
+    return (result);
 }
+
 
 static int	get_stackb_move(t_stack_values s, int nbr)
 { //determina el movimiento para mover un elemento a stack_b
@@ -159,7 +157,7 @@ static int	get_stackb_move(t_stack_values s, int nbr)
 static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 { 
 	int	b_moves;
-
+	
 	b_moves = get_stackb_move(get_stack_value(*stack_b, c.sizes.min),
 			c.order.nbr); //se pasa el chunk y se comprueba 
 	if (b_moves > 0 && c.order.pos > 0) // si b_moves > 0 hay q mover hacia inicio d stack
@@ -169,10 +167,10 @@ static int	move_stacks(t_stack **stack_a, t_stack **stack_b, t_chunk c)
 	else
 	{
 		if (c.order.pos > 0)
-			ra_mov(stack_a);
+			ra_mov(stack_a); //aqui peta
 		else if (c.order.pos < 0)
 			rra_mov(stack_a);
-		if (b_moves > 0)
+		else if (b_moves > 0)
 			rb_mov(stack_b);
 		else if (b_moves < 0)
 			rrb_mov(stack_b);
@@ -198,7 +196,9 @@ void	pre_pb(t_stack **stack_a, t_stack **stack_b, t_chunk *chunk)
 	else
 	{
 		while (chunk->order.pos > 0 && chunk->order.pos--)
+		{	
 			ra_mov(stack_a);
+		}
 		while (chunk->order.pos < 0 && chunk->order.pos++)
 			rra_mov(stack_a);
 	}

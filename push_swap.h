@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:33:12 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/07 13:51:57 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/09 12:35:21 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,6 @@ void				order5(t_stack **stack_a, t_stack **stack_b);
 void				order3(t_stack **stack_a);
 void				reverseorder3(t_stack **stack_a);
 void				print_stacks(t_stack *stack_a, t_stack *stack_b);
-void				quicksort(t_stack **stack_a, t_stack **stack_b, int low,
-						int high);
-int					partition(t_stack **stack_a, t_stack **stack_b, int low,
-						int high);
-int					find_pivot(t_stack **stack_a, int low, int high);
-void				add_elem(t_stack **stack, int elem);
-void				divide_b(t_stack **stack_b, t_stack **stack_a);
-void				order500(t_stack **stack_a, t_stack **stack_b, int size);
 t_chunk_sizes		get_chunk_sizes(int pos, int stack_len, int tot_chunks);
 t_chunk_order		get_chunk_next_pos(t_stack *stack, int max, int stack_len);
 void				stack_b_nextchunk(t_stack **stack_a, t_stack **stack_b,
