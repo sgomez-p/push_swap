@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/09 12:42:34 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/10 08:49:12 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int ft_isspace(char c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }
-
+/*
 void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 {
 	int b_len;
@@ -90,7 +90,7 @@ void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
 			reverseorder3(stack_b); // no se si hace falta reverseorder3
 	}
 	push_src_to_dts(stack_a, stack_b);
-}
+}*/
 
 int get_next_move(t_stack *stack, int nbr, int len)
 { //almacena la posicion del numero que buscamos y lo almacena en first
@@ -153,8 +153,6 @@ static void filter_by_stack(t_stack **stack)
 		order4(stack, &aux);
 	else if (stack_len == 5)
 		order5(stack, &aux);
-	else if (stack_len == 100 || stack_len == 500)
-		order_with_chunks(stack, &aux, 8);
 	else
 		orderbydefault(stack, &aux);
 }
