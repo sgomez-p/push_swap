@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/09 10:59:14 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/10 12:17:07 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,32 @@ void	rr_mov(t_stack **stack_a, t_stack **stack_b)
 	rb_mov(stack_b);
     ft_putstr("rr\n");
 }
-
 void rra_mov(t_stack **stack_a)
 {
-    t_stack *temp;
-    t_stack *last;
-    temp = *stack_a;
-    if (temp != NULL)
-    {
-        last = NULL;
-        while (temp->next != NULL)
-        {
-            last = temp;
-            temp = temp->next;
-        }
-        last->next = NULL;
-        temp->next = *stack_a;
-        *stack_a = temp;
-    }
-    ft_putstr("rra\n");
+t_stack *temp;
+t_stack *last;
+temp = *stack_a;
+if (temp != NULL && temp->next != NULL)
+{
+last = NULL;
+while (temp->next != NULL)
+{
+last = temp;
+temp = temp->next;
+}
+last->next = NULL;
+temp->next = *stack_a;
+*stack_a = temp;
+}
+ft_putstr("rra\n");
 }
 
-void	rrb_mov(t_stack **stack_b)
+void rrb_mov(t_stack **stack_b)
 {
     t_stack *temp;
     t_stack *last;
     temp = *stack_b;
-    if (temp != NULL)
+    if (temp != NULL && temp->next != NULL)
     {
         last = NULL;
         while (temp->next != NULL)
@@ -93,6 +92,7 @@ void	rrb_mov(t_stack **stack_b)
     ft_putstr("rrb\n");
 }
 
+
 void	rrr_mov(t_stack **stack_a, t_stack **stack_b) 
 {
 	if (!(*stack_a) || (*stack_b))
@@ -103,27 +103,25 @@ void	rrr_mov(t_stack **stack_a, t_stack **stack_b)
 
 void pa_mov(t_stack **stack_a, t_stack **stack_b)
 {
-    t_stack *temp;
-    if (*stack_b)
-    {
-        temp = *stack_b;
-        *stack_b = (*stack_b)->next;
-        temp->next = *stack_a;
-        *stack_a = temp;
-    }
+    t_stack *aux;
+    
+    aux = *stack_b;
+
+    *stack_b = (*stack_b)->next;
+    aux->next = *stack_a;
+    *stack_a = aux;
     ft_putstr("pa\n");
 }
 
 void pb_mov(t_stack **stack_a, t_stack **stack_b)
 {
-    t_stack *temp;
-    if (*stack_a)
-    {
-        temp = *stack_a;
-        *stack_a = (*stack_a)->next;
-        temp->next = *stack_b;
-        *stack_b = temp;
-    }
+    t_stack *aux;
+    
+    aux = *stack_a;
+   
+    *stack_a = (*stack_a)->next;
+    aux->next = *stack_b;
+    *stack_b = aux;
     ft_putstr("pb\n");
 }
 
