@@ -6,89 +6,89 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 11:47:13 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/10 11:45:34 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:09:20 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_chunk_sizes get_chunk_sizes(int b_len, int maxstack_len, int tot_chunks)
+void prequick_sort(t_stack **stack_a, t_stack **stack_b)
 {
-	t_chunk_sizes chunk_sizes;
-	chunk_sizes.min = maxstack_len / tot_chunks;
-	chunk_sizes.max = chunk_sizes.min + 1;
-	if (maxstack_len % tot_chunks <= b_len)
-		chunk_sizes.max--;
-	chunk_sizes.size = maxstack_len - b_len;
-	return chunk_sizes;
+    int size;
+    size = get_lenstack(*stack_a);
+    if (size <= 1)
+        return;
+    quicksort(stack_a, stack_b, size);
 }
 
-t_chunk_item get_chunk_next_item(t_stack *stack, int chunk_size, int remaining_len)
+void quicksort(t_stack **stack_a, t_stack **stack_b, int size)
 {
-	t_stack *current = stack;
-	int i = 0;
-	while (i < remaining_len - chunk_size)
-	{
-		current = current->next;
-		i++;
-	}
-	t_chunk_item item;
-	item.nbr = current->nbr;
-	item.pos = current->pos;
-	return item;
+    int pivot_index;
+    if (size <= 1)
+        return;
+    pivot_index = partition(stack_a, stack_b, size);
+    quicksort(stack_a, stack_b, pivot_index);
+    quicksort(stack_a, stack_b, size - pivot_index - 1);
 }
 
-void prepare_pushb(t_stack **stack_a, t_stack **stack_b, t_chunk *c)
+
+int get_pivot(t_stack *stack_a, int size)
 {
-	int i = 0;
-	t_stack *current = *stack_a;
-	stack_b = stack_b;
-	while (current->nbr != c->item.nbr)
-	{
-		if (i < c->sizes.min)
-			ra_mov(stack_a);
-		else
-			rra_mov(stack_a);
-		current = *stack_a;
-		i++;
-	}
+    int pivot_index;
+    t_stack *current;
+    current = stack_a;
+    pivot_index = size / 2;
+    while (pivot_index > 0)
+    {
+        current = current->next;
+        pivot_index--;
+    }
+    return (current->nbr);
 }
 
-void	push_src_to_dts(t_stack **stack_a, t_stack **stack_b)
-{ // mueve todo de un stack a otro
-	int		len;
-	t_stack	*aux;
-
-	len = get_lenstack(*stack_a);
-	aux = *stack_a;
-	while (aux->site != len)
-	{
-		rrb_mov(stack_b);
-		aux = *stack_a;
-		//ft_putstr("p src to dst while\n");
-	}
-	while (len--)
-		pa_mov(stack_a, stack_b);
-	//ft_putstr("salimos de aca");
-}
-
-
-void order_with_chunks(t_stack **stack_a, t_stack **stack_b, int tot_chunks)
+int move_pivot_to_top(t_stack **stack_a, t_stack **stack_b, int pivot)
 {
-	int b_len;
-	int maxstack_len;
-	t_chunk c;
-
-	maxstack_len = get_lenstack(*stack_a);
-	b_len = 0;
-	while (b_len < maxstack_len)
-	{
-		c.sizes = get_chunk_sizes(b_len, maxstack_len, tot_chunks);
-		c.item = get_chunk_next_item(*stack_a, c.sizes.max, c.sizes.size);
-		prepare_pushb(stack_a, stack_b, &c);
-		pb_mov(stack_a, stack_b);
-		b_len++;
-	}
-	push_src_to_dts(stack_b, stack_a);
+    int i;
+    int size;
+    size = get_lenstack(*stack_a);
+    i = 0;
+    while ((*stack_a)->nbr != pivot)
+    {
+        if ((*stack_a)->nbr > pivot)
+        {
+            pb_mov(stack_a, stack_b);
+            size--;
+        }
+        else
+        {
+            ra_mov(stack_a);
+            i++;
+        }
+    }
+    return (i);
 }
 
+int partition(t_stack **stack_a, t_stack **stack_b, int size)
+{
+    int pivot_index;
+    int i;
+    if (size <= 0)
+        return 0;
+    pivot_index = get_pivot(*stack_a, size);
+    pivot_index = move_pivot_to_top(stack_a, stack_b, pivot_index);
+    i = 0;
+    while (i < size - 1 && (*stack_a))
+    {
+        if ((*stack_a)->nbr < (*stack_a)->next->nbr)
+        {
+            pb_mov(stack_a, stack_b);
+            size--;
+        }
+        else
+        {
+            ra_mov(stack_a);
+            i++;
+        }
+    }
+    return (i);
+}

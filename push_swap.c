@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/10 10:26:11 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:07:05 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void orderbydefault(t_stack **stack_a, t_stack **stack_b)
 	len = get_lenstack(*stack_a);
 	while (len)
 	{
-		move = get_next_move(*stack_a, ++next, len--);
+		move = get_next_move(*stack_a, ++next, len--); //busca el siguiente y la len se reduce
 		while (move > 0 && move--)
 			ra_mov(stack_a);
 		while (move < 0 && move++)
@@ -132,7 +132,7 @@ static void filter_by_stack(t_stack **stack)
 	else if (stack_len == 5)
 		order5(stack, &aux);
 	else if (stack_len == 100 || stack_len == 500)
-		order_with_chunks(stack, &aux, 5);
+		prequick_sort(stack, &aux);
 	else
 		orderbydefault(stack, &aux);
 }
@@ -198,7 +198,7 @@ static int check_nbr(char *const_str_nbr)
 	return (str_nbr - const_str_nbr);
 }
 
-static void ft_lstadd_back_nbr(t_stack **stack, int nbr)
+static void setup_list(t_stack **stack, int nbr)
 {
 	t_stack *aux;
 	t_stack *new;
@@ -244,7 +244,7 @@ int nbr_is_valid(char *str_nbr, t_stack **stack)
 	nbr = ft_atoi(str_nbr);
 	if (exists(nbr, *stack))
 		return (0);
-	ft_lstadd_back_nbr(stack, nbr);
+	setup_list(stack, nbr); //
 	str_nbr += read;
 	while (ft_isspace(*str_nbr))
 		str_nbr++;

@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/09 12:39:49 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:53:08 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ void	order5(t_stack **stack_a, t_stack **stack_b)
 	pa_mov(stack_a, stack_b);
 }
 
+/*
 void	setup_pos(t_stack *s)
 // asignamos las posiciones donde se encuentra actualmente cada numero
 {
@@ -186,7 +187,7 @@ void	setup_pos(t_stack *s)
 		s = s->next;
 		i++;
 	}
-}
+} */
 
 int	get_lenstack(t_stack *stack)
 {
@@ -237,84 +238,3 @@ void	print_stack_a(t_stack *stack_a)
 	}
 	printf("\n");
 }
-
-/*
-void	site_pos(t_stack *s)
-{
-	t_stack	*current;
-	int		count;
-	t_stack	*temp;
-
-	current = s;
-	while (current != NULL)
-	{
-		count = 1;
-		temp = s;
-		while (temp != NULL)
-		{
-			if (current->nbr > temp->nbr)
-			{
-				count++;
-			}
-			temp = temp->next;
-		}
-		current->site = count;
-		current = current->next;
-	}
-} */
-/*
-void	find_smallest_numbers(t_stack **stack_a, int *pos1, int *pos2)
-{
-	int		i;
-	t_stack	*temp;
-
-	int min1, min2;
-	min1 = min2 = INT_MAX;
-	temp = *stack_a;
-	i = 0;
-	while (temp != NULL)
-	{
-		if (temp->nbr < min1)
-		{
-			min2 = min1;
-			min1 = temp->nbr;
-			*pos1 = i;
-		}
-		else if (temp->nbr < min2)
-		{
-			min2 = temp->nbr;
-			*pos2 = i;
-		}
-		temp = temp->next;
-		i++;
-	}
-}
-
-long	small_finder(t_stack *stack)
-{
-	int	small;
-
-	small = stack->nbr;
-	while (stack != NULL)
-	{
-		if (small >= stack->nbr)
-			small = stack->nbr;
-		stack = stack->next;
-	}
-	return (small);
-}
-
-long	biggest_finder(t_stack *stack) // hacemos por algo el stack a?
-{
-	int big;
-
-	big = stack->nbr;
-	while (stack != NULL)
-	{
-		if (big <= stack->nbr)
-			big = stack->nbr;
-		stack = stack->next;
-	}
-	return (big);
-}
-*/
