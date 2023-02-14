@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/13 18:53:08 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:31:46 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,6 @@ void	add_elem(t_stack **stack, int elem)
 	new->nbr = elem;
 	new->next = *stack;
 	*stack = new;
-}
-
-void	reverseorder3(t_stack **stack_b)
-{
-	int		first;
-	int		second;
-	int		third;
-	t_stack	*aux;
-
-	while (1)
-	{
-		aux = *stack_b;
-		first = aux->nbr * -1;
-		second = aux->next->nbr * -1;
-		third = aux->next->next->nbr * -1;
-		ft_putstr("pinga");
-		if (second > first && second > third)
-			rrb_mov(stack_b);
-		else if (first > second && first > third)
-			rb_mov(stack_b);
-		else if (first > second)
-			sb_mov(stack_b);
-		else
-			break ;
-	}
 }
 
 void	order3(t_stack **stack_a)
@@ -78,7 +53,7 @@ void	order3(t_stack **stack_a)
 	}
 }
 
-void order4(t_stack **stack_a, t_stack **stack_b)
+void order4(t_stack **stack_a, t_stack **stack_b) //huele a qlo
 {
 	int		first;
 	int		second;

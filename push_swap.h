@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:33:12 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/13 19:26:58 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:45:33 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,22 @@ void				sa_mov(t_stack **stack_a);
 void				sb_mov(t_stack **stack_b);
 void				ss_mov(t_stack **stack_a, t_stack **stack_b);
 int					check_empty(t_stack *s);
-void				setup_pos(t_stack *s);
 void				print_stack_a(t_stack *stack_a);
 void				order4(t_stack **stack_a, t_stack **stack_b);
 void				order5(t_stack **stack_a, t_stack **stack_b);
 void				order3(t_stack **stack_a);
-void				reverseorder3(t_stack **stack_a);
 void				print_stacks(t_stack *stack_a, t_stack *stack_b);
 int					get_next_move(t_stack *stack, int nbr, int len);
 int					isordered(t_stack *stack);
-int partition(t_stack **stack_a, t_stack **stack_b, int size);
-void quicksort(t_stack **stack_a, t_stack **stack_b, int size);
-void prequick_sort(t_stack **stack_a, t_stack **stack_b);
-int move_pivot_to_top(t_stack **stack_a, t_stack **stack_b, int pivot);
-int get_pivot(t_stack *stack_a, int size);
-int	ft_atoi(const char *str);
+int 				partition(t_stack **stack_a, t_stack **stack_b, int size);
+void 				quicksort(t_stack **stack_a, t_stack **stack_b, int size);
+void 				prequick_sort(t_stack **stack_a, t_stack **stack_b);
+int 				move_pivot_to_top(t_stack **stack_a, t_stack **stack_b, int pivot);
+int 				get_pivot(t_stack *stack_a, int size);
+int					ft_atoi(const char *str);
+int 				ft_isdigit(int c);
+int 				ft_isspace(char c);
+int 				valid_range_int(const char *str_nbr);
+int 				check_nbr(char *const_str_nbr);
+int					exists(int nbr, t_stack *stack);
 #endif

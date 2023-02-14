@@ -6,23 +6,13 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 11:32:14 by sgomez-p          #+#    #+#             */
-/*   Updated: 2022/09/26 16:25:13 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:29:35 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <limits.h>
 #include <stdbool.h>
-
-static bool	ft_isspace(char c)
-{
-	if (c == ' ' || c == '\f' || c == '\n'
-		|| c == '\r' || c == '\t' || c == '\v')
-	{
-		return (true);
-	}
-	return (false);
-}
 
 int	ft_atoi(const char *str)
 {
@@ -52,8 +42,3 @@ int	ft_atoi(const char *str)
 	}
 	return (num * sig);
 }
-/*int		main(void)
-{
-	printf("%d\n", ft_atoi("      	---+--46541zzza56"));
-
-}*/
