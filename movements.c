@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:05:33 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/14 11:39:06 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:15:45 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void ra_mov(t_stack **stack_a)
 {
     t_stack *temp;
     temp = *stack_a;
-    if (temp != NULL)
+    if (temp != NULL && temp->next != NULL)
     {
         while (temp->next != NULL)
             temp = temp->next;
@@ -27,11 +27,12 @@ void ra_mov(t_stack **stack_a)
     ft_putstr("ra\n");
 }
 
+
 void rb_mov(t_stack **stack_b)
 {
     t_stack *temp;
     temp = *stack_b;
-    if (temp != NULL)
+    if (temp != NULL && temp->next != NULL)
     {
         while (temp->next != NULL)
             temp = temp->next;

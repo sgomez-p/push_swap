@@ -6,89 +6,95 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 11:47:13 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/13 20:09:20 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/15 19:01:54 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void prequick_sort(t_stack **stack_a, t_stack **stack_b)
+void merge_sort(t_stacks *stack)
 {
-    int size;
-    size = get_lenstack(*stack_a);
-    if (size <= 1)
+    int size = (stack)->size;
+    if (size < 2)
         return;
-    quicksort(stack_a, stack_b, size);
-}
 
-void quicksort(t_stack **stack_a, t_stack **stack_b, int size)
-{
-    int pivot_index;
-    if (size <= 1)
-        return;
-    pivot_index = partition(stack_a, stack_b, size);
-    quicksort(stack_a, stack_b, pivot_index);
-    quicksort(stack_a, stack_b, size - pivot_index - 1);
-}
+    // Dividir la pila en dos
+    int half_size = size / 2;
+    t_stack *stack_a = (stack)->stack_a;
+    t_stack *stack_b = (stack)->stack_b;
 
-
-int get_pivot(t_stack *stack_a, int size)
-{
-    int pivot_index;
-    t_stack *current;
-    current = stack_a;
-    pivot_index = size / 2;
-    while (pivot_index > 0)
+    while (stack_a->next && half_size > 1)
     {
-        current = current->next;
-        pivot_index--;
+        stack_a = stack_a->next;
+        half_size--;
     }
-    return (current->nbr);
-}
 
-int move_pivot_to_top(t_stack **stack_a, t_stack **stack_b, int pivot)
-{
-    int i;
-    int size;
-    size = get_lenstack(*stack_a);
-    i = 0;
-    while ((*stack_a)->nbr != pivot)
+    stack_b = stack_a->next;
+    stack_a->next = NULL;
+    stack_a = (stack)->stack_a;
+
+    t_stacks *left = malloc(sizeof(t_stacks));
+    t_stacks *right = malloc(sizeof(t_stacks));
+
+    left->size = size / 2;
+    right->size = size - size / 2;
+
+    left->stack_a = stack_a;
+    left->stack_b = NULL;
+    right->stack_a = stack_b;
+    right->stack_b = NULL;
+
+    // Ordenar cada pila por separado
+    merge_sort(left);
+    merge_sort(right);
+
+    // Unir las dos pilas ordenadas
+    stack = NULL;
+    while (left->stack_a || right->stack_a)
     {
-        if ((*stack_a)->nbr > pivot)
+        if (!left->stack_a)
         {
-            pb_mov(stack_a, stack_b);
-            size--;
+            pb_mov(&right->stack_a, &right->stack_b);
+            continue;
         }
+        if (!right->stack_a)
+        {
+            pb_mov(&left->stack_a, &left->stack_b);
+            continue;
+        }
+
+        if (left->stack_a->nbr < right->stack_a->nbr)
+            pb_mov(&left->stack_a, &left->stack_b);
         else
-        {
-            ra_mov(stack_a);
-            i++;
-        }
+            pb_mov(&right->stack_a, &right->stack_b);
     }
-    return (i);
+    // Fusionar las pilas auxiliares de regreso a la pila original
+    while (left->stack_b)
+        pa_mov(&stack_a, &left->stack_b);
+    while (right->stack_b)
+        pa_mov(&stack_b, &right->stack_b);
+    free(left);
+    free(right);
 }
 
-int partition(t_stack **stack_a, t_stack **stack_b, int size)
+
+
+
+
+/*
+int sort_stack(t_stack **stack_a, t_stack **stack_b)
 {
-    int pivot_index;
-    int i;
-    if (size <= 0)
+    int size = get_lenstack(*stack_a);
+    if (size == 0)
         return 0;
-    pivot_index = get_pivot(*stack_a, size);
-    pivot_index = move_pivot_to_top(stack_a, stack_b, pivot_index);
-    i = 0;
-    while (i < size - 1 && (*stack_a))
-    {
-        if ((*stack_a)->nbr < (*stack_a)->next->nbr)
-        {
-            pb_mov(stack_a, stack_b);
-            size--;
-        }
-        else
-        {
-            ra_mov(stack_a);
-            i++;
-        }
-    }
-    return (i);
-}
+
+    int max_moves = 7000;
+    if (size <= 5)
+        return insertion_sort(stack_a, stack_b, size);
+    else if (size <= 100)
+        max_moves = 700;
+    else if (size <= 500)
+        max_moves = 7000;
+
+    return quicksort(stack_a, stack_b, size, max_moves);
+}*/
