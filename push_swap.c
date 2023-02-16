@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/15 19:03:35 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/16 13:25:39 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ static void filter_by_stack(t_stack **stack)
 		order4(stack, &aux);
 	else if (stack_len == 5)
 		order5(stack, &aux);
-	else if (stack_len == 500)
-		quicksort(stack, 500);
+	//else if (stack_len == 500)
+	//	quicksort(stack, 500);
 	else
 		orderstock(stack, &aux);
 }
