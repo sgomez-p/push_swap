@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/16 13:35:59 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/17 11:32:39 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,70 +53,54 @@ void	order3(t_stack **stack_a)
 	}
 }
 
+int search_smaller(t_stack *stack)
+{
+	int		smaller;
+	t_stack	*temp;
+
+	smaller = INT_MAX;
+	temp = stack;
+	while (temp != NULL)
+	{
+		if (temp->nbr < smaller)
+			smaller = temp->nbr;
+		temp = temp->next;
+	}
+	return (smaller);
+}
+
+void	move_first_to_top(t_stack **stack, int first)
+{
+	while ((*stack)->nbr != first)
+	{
+		if (first > get_lenstack(*stack) / 2)
+			rra_mov(stack);
+		else
+			ra_mov(stack);
+	}
+}
+
 void order4(t_stack **stack_a, t_stack **stack_b)
 {
 	int		first;
-	t_stack *temp;
-	temp = *stack_a;
-	first = INT_MAX;
-	while (temp != NULL)
-	{
-		if (temp->nbr <= first)
-		{
-			first = temp->nbr;
-		}
-		temp = temp->next;
-	}
-	while ((*stack_a)->nbr != first)
-	{
-		if (first > get_lenstack(*stack_a) / 2)
-			rra_mov(stack_a);
-		else
-			ra_mov(stack_a);
-	}
+	first = search_smaller(*stack_a);
+	move_first_to_top(stack_a, first);
 	pb_mov(stack_a, stack_b);
 	order3(stack_a);
 	pa_mov(stack_a, stack_b);
 }
 
+
 void	order5(t_stack **stack_a, t_stack **stack_b)
 {
 	int		first;
-	int		second;
-	t_stack	*temp;
 	t_stack	*temp_b;
 
-	first = INT_MAX;
-	second = INT_MAX;
-	temp = *stack_a;
-	while (temp != NULL)
-	{
-		if (temp->nbr <= first)
-		{
-			second = first;
-			first = temp->nbr;
-		}
-		else if (temp->nbr <= second)
-		{
-			second = temp->nbr;
-		}
-		temp = temp->next;
-	}
-	while ((*stack_a)->nbr != first)
-	{
-		if (first > get_lenstack(*stack_a) / 2)
-			rra_mov(stack_a);
-		else
-			ra_mov(stack_a);
-	}
+	first = search_smaller(*stack_a);
+	move_first_to_top(stack_a, first);
 	pb_mov(stack_a, stack_b);
-	while ((*stack_a)->nbr != second)
-	{
-		if (second > get_lenstack(*stack_a) / 2)
-			rra_mov(stack_a);
-		else
-			ra_mov(stack_a);
-	}
+	first = search_smaller(*stack_a);
+	move_first_to_top(stack_a, first);
 	pb_mov(stack_a, stack_b);
 	temp_b = *stack_b;
 	order3(stack_a);
@@ -141,6 +125,8 @@ int	get_lenstack(t_stack *stack)
 	return (i);
 }
 
+
+/*
 void	print_stacks(t_stack *stack_a, t_stack *stack_b)
 {
 	t_stack	*current;
@@ -175,3 +161,4 @@ void	print_stack_a(t_stack *stack_a)
 	}
 	printf("\n");
 }
+*/
