@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/16 17:25:37 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:25:24 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int get_next_move(t_stack *stack, int nbr, int len)
 	return (last);
 }
 
-void orderstock(t_stack **stack_a, t_stack **stack_b)
+void bubble(t_stack **stack_a, t_stack **stack_b)
 {
 	int len;
 	int move;
@@ -75,7 +75,7 @@ static void filter_by_stack(t_stack **stack)
 	//else if (stack_len == 500)
 	//	quicksort(stack, 500);
 	else
-		orderstock(stack, &aux);
+		bubble(stack, &aux);
 }
 
 void ft_freestack(t_stack **stack)

@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:33:12 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/15 19:00:57 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:26:30 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ void				sa_mov(t_stack **stack_a);
 void				sb_mov(t_stack **stack_b);
 void				ss_mov(t_stack **stack_a, t_stack **stack_b);
 int					check_empty(t_stack *s);
-void				print_stack_a(t_stack *stack_a);
+//void				print_stack_a(t_stack *stack_a);
 void				order4(t_stack **stack_a, t_stack **stack_b);
 void				order5(t_stack **stack_a, t_stack **stack_b);
 void				order3(t_stack **stack_a);
-void				print_stacks(t_stack *stack_a, t_stack *stack_b);
+//void				print_stacks(t_stack *stack_a, t_stack *stack_b);
 int					get_next_move(t_stack *stack, int nbr, int len);
 int					isordered(t_stack *stack);
 int					ft_atoi(const char *str);
@@ -80,5 +80,5 @@ int 				ft_isspace(char c);
 int 				valid_range_int(const char *str_nbr);
 int 				check_nbr(char *const_str_nbr);
 int					exists(int nbr, t_stack *stack);
-void merge_sort(t_stacks *stack);
+void				bubble(t_stack **stack_a, t_stack **stack_b);
 #endif
