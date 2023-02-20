@@ -6,12 +6,11 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/17 11:32:39 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/20 10:23:44 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 void	add_elem(t_stack **stack, int elem)
 {

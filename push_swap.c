@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/16 13:25:39 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/16 17:25:37 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int nbr_is_valid(char *str_nbr, t_stack **stack)
 	nbr = ft_atoi(str_nbr);
 	if (exists(nbr, *stack))
 		return (0);
-	setup_list(stack, nbr); //
+	setup_list(stack, nbr);
 	str_nbr += read;
 	while (ft_isspace(*str_nbr))
 		str_nbr++;
@@ -149,7 +149,7 @@ int nbr_is_valid(char *str_nbr, t_stack **stack)
 int main(int argc, char **argv)
 {
 	t_stack *stack_a;
-	int i;
+	int i; 
 	int error;
 
 	i = 0;
@@ -160,7 +160,7 @@ int main(int argc, char **argv)
 		if (!nbr_is_valid(argv[i], &stack_a))
 		{
 			write(1, "Error\n", 7);
-			error = EINVAL; // se podria probar con devolver (-1) ? este error es para cuando el argumento introducido no es valido
+			error = EINVAL;
 			break;
 		}
 	}
