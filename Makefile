@@ -6,7 +6,7 @@
 #    By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 14:27:09 by sgomez-p          #+#    #+#              #
-#    Updated: 2023/02/20 12:23:06 by sgomez-p         ###   ########.fr        #
+#    Updated: 2023/02/20 12:24:49 by sgomez-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ git: fclean
 	@git add . ;
 	@read -p "Name the commit: " commit ;\
 	git commit -m "$$commit" ;\
-	git push origin master ;
+	git push;
 
 clean:
 		rm -rf $(OBJS)
