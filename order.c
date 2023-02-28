@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/20 10:23:44 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/28 11:15:25 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void order4(t_stack **stack_a, t_stack **stack_b)
 	order3(stack_a);
 	pa_mov(stack_a, stack_b);
 }
-
 
 void	order5(t_stack **stack_a, t_stack **stack_b)
 {
