@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:33:12 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/20 15:26:30 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:39:02 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,20 @@ typedef struct t_stack // definimos lo q tiene cada stack individual
 	int nbr;
 	int				order;
 	int size;
+	int 	data;
 	struct t_stack *next;
+	int top_movements;
+	int bottom_movements;
+	int prev;
 }					t_stack;
-
 
 typedef struct t_stacks // con esto accedemos a los stacks
 {
 	int size;
 	t_stack *stack_a;
 	t_stack *stack_b;
-}					t_stacks; 
+}					t_stacks;
+
 
 
 /*void				create_stack(t_stacks *situ, int argc, char **argv);
@@ -81,4 +85,10 @@ int 				valid_range_int(const char *str_nbr);
 int 				check_nbr(char *const_str_nbr);
 int					exists(int nbr, t_stack *stack);
 void				bubble(t_stack **stack_a, t_stack **stack_b);
+void sort_100(t_stack **stack_a, t_stack **stack_b);
+void top_and_bottom_plus_detector_smallest(t_stack **stack_a, t_stack **stack_b, t_stack *current_a, t_stack *last, int *smallest);
+void    check_position_to_push_b(t_stack **stack_a, t_stack **stack_b, t_stack *current_a, t_stack *last, int *smallest);
+void movements_checker_to_push_b(t_stack **stack_a, t_stack **stack_b, t_stack *top_node, t_stack *bottom_node, int *smallest);
+int find_min_number(t_stack *stack);
+int find_max_number(t_stack *stack);
 #endif
