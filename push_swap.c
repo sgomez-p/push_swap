@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/04/17 20:26:51 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:04:29 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ static void filter_by_stack(t_stack **stack)
 		order4(stack, &aux);
 	else if (stack_len == 5)
 		order5(stack, &aux);
-	else if (stack_len == 100 || stack_len == 500)
+	else if (stack_len  > 6 || stack_len == 500)
 		sort_100(stack, &aux);
 	else
 		bubble(stack, &aux);
+	
 }
 
 void ft_freestack(t_stack **stack)
@@ -166,6 +167,7 @@ int main(int argc, char **argv)
 	}
 	if (!error && !isordered(stack_a))
 		filter_by_stack(&stack_a);
+	ft_putstr("OK");
 	ft_freestack(&stack_a);
 	return (error);
 }
