@@ -6,11 +6,12 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:30:44 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/04/19 15:04:29 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/04/20 19:19:20 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
 
 int get_next_move(t_stack *stack, int nbr, int len)
 { //almacena la posicion del numero que buscamos y lo almacena en first
@@ -47,7 +48,7 @@ void bubble(t_stack **stack_a, t_stack **stack_b)
 	len = get_lenstack(*stack_a);
 	while (len)
 	{
-		move = get_next_move(*stack_a, ++next, len--); //busca el siguiente y la len se reduce
+		move = get_next_move(*stack_a, ++next, len--);
 		while (move > 0 && move--)
 			ra_mov(stack_a);
 		while (move < 0 && move++)
@@ -57,6 +58,7 @@ void bubble(t_stack **stack_a, t_stack **stack_b)
 	while (next--)
 		pa_mov(stack_a, stack_b);
 }
+
 
 static void filter_by_stack(t_stack **stack)
 {
@@ -72,7 +74,7 @@ static void filter_by_stack(t_stack **stack)
 		order4(stack, &aux);
 	else if (stack_len == 5)
 		order5(stack, &aux);
-	else if (stack_len  > 6 || stack_len == 500)
+	else if (stack_len  == 99 || stack_len == 500)
 		sort_100(stack, &aux);
 	else
 		bubble(stack, &aux);
@@ -160,14 +162,14 @@ int main(int argc, char **argv)
 	{
 		if (!nbr_is_valid(argv[i], &stack_a))
 		{
-			write(1, "Error\n", 7);
+			write(1, "Errorcito\n", 9);
 			error = EINVAL;
 			break;
 		}
 	}
 	if (!error && !isordered(stack_a))
 		filter_by_stack(&stack_a);
-	ft_putstr("OK");
+	ft_putstr("OK\n");
 	ft_freestack(&stack_a);
 	return (error);
 }

@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:39:25 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/28 11:15:25 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/04/20 18:20:36 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,17 +110,17 @@ void	order5(t_stack **stack_a, t_stack **stack_b)
 
 int	get_lenstack(t_stack *stack)
 {
-	int	i;
+	int		len;
+	t_stack	*temp;
 
-	if (!stack)
-		return (0);
-	i = 0;
-	while (stack)
+	len = 0;
+	temp = stack;
+	while (temp != NULL)
 	{
-		i++;
-		stack = stack->next;
+		len++;
+		temp = temp->next;
 	}
-	return (i);
+	return (len);
 }
 
 
